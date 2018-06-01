@@ -11,6 +11,8 @@ public class CameraController : MonoBehaviour {
     public static GameObject aimGardenfield;
     private bool aimtofield;
 
+    public GameObject SelectArea;//选择面板
+
     void Start () {
 
         
@@ -67,6 +69,8 @@ public class CameraController : MonoBehaviour {
                 }else if(aimSkinmap[info[0], info[1]] == 1)
                 {
                     //界面参数
+                    SelectArea_Show();
+                    SelectArea_Pos();
                     Debug.Log("以探索");
                 }
             }
@@ -81,8 +85,41 @@ public class CameraController : MonoBehaviour {
         }
     }
 
-   
-    
-    
+    public void SelectArea_Pos() //设置选择面板为鼠标位置
+    {
+        SelectArea.transform.position = Input.mousePosition;
+    }
+    public void SelectArea_Show() //选择面板显示
+    {
+        SelectArea.SetActive(true);
 
+        //SelectAreaIsShowed = true;
+    }
+    public void SelectArea_Hide() //选择面板隐藏
+    {
+        SelectArea.SetActive(false);
+        //SelectAreaIsShowed = false;
+    }
+    public void PlantClicked() //种植物操作
+    {
+        GameController.Move -= 1;
+        Debug.Log("种");
+        SelectArea_Hide();
+
+
+    }
+
+    public void NoPlantClicked() //不种
+    {
+
+        Debug.Log("不种"); 
+        SelectArea_Hide();
+    }
+
+    public void RepairClicked() //耕地
+    {
+        GameController.Move -= 1;
+        Debug.Log("耕地");
+        SelectArea_Hide();
+    }
 }
