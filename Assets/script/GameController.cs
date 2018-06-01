@@ -73,7 +73,7 @@ public class GameController : MonoBehaviour
         sunPower = sunPower + totalSunProduce;
         moonPower = moonPower + totalMoonProduce;
 
-        gardenMap = targetMap.GetComponent<GardenMap>();
+       
 
         O2CO2TotalRate = O2 / (O2 + CO2);
 
@@ -115,9 +115,9 @@ public class GameController : MonoBehaviour
     //获取当前地图上哪个坐标长着植物
     public List<MyPoint> FindPlant()
     {
-        gardenMap = targetMap.GetComponent<GardenMap>();
-        int[,] skinMap = gardenMap.GetSkinMap();
-        int[,] mapState = gardenMap.GetMapState();
+        
+        int[,] skinMap = GardenMap.skinMap;
+        int[,] mapState = GardenMap.mapstate;
         List<MyPoint> points = new List<MyPoint>();
         for (int i = 0; i < skinMap.GetLength(0); i++)
         {

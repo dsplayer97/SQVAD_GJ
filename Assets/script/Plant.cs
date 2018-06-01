@@ -77,14 +77,14 @@ public class Plant : MonoBehaviour
   
 
 
-    void CostSun()
+    public void CostSun()
     {
-        GameObject.Find("GameController").SendMessageUpwards("GrowConsumeSun", sunCost);
+        GameObject.Find("Main Camera").SendMessageUpwards("GrowConsumeSun", sunCost);
     }
 
     //建造植物时消耗月亮
-    void CostMoon() {
-        GameObject.Find("GameController").SendMessageUpwards("GrowConsumeMoon", moonCost);
+    public void CostMoon() {
+        GameObject.Find("Main Camera").SendMessageUpwards("GrowConsumeMoon", moonCost);
     }
 
     //根据氧气二氧化碳比例和是否被害虫感染返回氧气产出

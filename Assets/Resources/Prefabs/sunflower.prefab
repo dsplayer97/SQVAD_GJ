@@ -486,7 +486,7 @@ MonoBehaviour:
   O2Produce: 20
   CO2Cost: 30
   O2Cost: 20
-  produceCD: 0
+  produceCD: 1
   buffO2Persent: 10
   buffCO2Persent: 0
   live: 0
