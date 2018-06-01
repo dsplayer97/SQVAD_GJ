@@ -16,18 +16,9 @@ public class GameController : MonoBehaviour
 
     private GameObject[] plantList;
 
-<<<<<<< HEAD
     public GameObject targetMap;
     private GardenMap gardenMap; public GardenMap GetGardenMap() { return gardenMap; }
 
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-=======
     public static int Round; //回合
 
     public static int Move; //行动
@@ -41,20 +32,15 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
->>>>>>> e02fd8718296b9d618b3129b3581453b5e23fe97
         if (Input.GetKeyDown(KeyCode.Space))
         {
             RoundConsume();
         }
     }
 
-<<<<<<< HEAD
     //回合结束时进行资源结算
-    void RoundConsume() {
-=======
     public void RoundConsume()
     {
->>>>>>> e02fd8718296b9d618b3129b3581453b5e23fe97
         float totalO2Consume = 0;
         float totalCO2Consume = 0;
         float totalO2Produce = 0;
@@ -67,7 +53,7 @@ public class GameController : MonoBehaviour
         foreach (GameObject i in plantList)
         {
             Plant p = i.GetComponent<Plant>();
-            if (Plant.live)
+            if (p.live)
             {
                 totalO2Consume = totalO2Consume + p.O2Cost;
                 totalCO2Consume = totalCO2Consume + p.CO2Cost;
@@ -86,14 +72,12 @@ public class GameController : MonoBehaviour
         sunPower = sunPower + totalSunProduce;
         moonPower = moonPower + totalMoonProduce;
 
-<<<<<<< HEAD
         gardenMap = targetMap.GetComponent<GardenMap>();
-=======
+
         O2CO2TotalRate = O2 / (O2 + CO2);
 
         GameObject.Find("UIController").GetComponent<UIControl>().ChangeSunMoon(sunPower, moonPower);
         GameObject.Find("UIController").GetComponent<UIControl>().ChangeAir(O2CO2TotalRate);
->>>>>>> e02fd8718296b9d618b3129b3581453b5e23fe97
 
         Debug.Log("O2:" + O2.ToString());
         Debug.Log("CO2:" + CO2.ToString());
@@ -117,7 +101,7 @@ public class GameController : MonoBehaviour
         moonPower = moonPower - delta;
     }
 
-<<<<<<< HEAD
+
     public GameObject[] GetAllPlant() {
         return GameObject.FindGameObjectsWithTag("Plant");
     }
@@ -143,13 +127,4 @@ public class GameController : MonoBehaviour
         }
         return points;
     }
-=======
-    GameObject[] GetAllPlant()
-    {
-        return GameObject.FindGameObjectsWithTag("Plant");
-    }
-    
-
-
->>>>>>> e02fd8718296b9d618b3129b3581453b5e23fe97
 }

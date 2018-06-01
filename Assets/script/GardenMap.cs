@@ -5,18 +5,10 @@ using System;
 
 public class GardenMap : MonoBehaviour 
 {
-
-
-<<<<<<< HEAD
     private int[] mapAttribute = new int[49]; public int[] GetMapAttribute() { return mapAttribute; }
     private int[,] mapstate = new int[7, 7]; public int[,] GetMapState() { return mapstate; }
     private static int[,] skinMap = new int[7, 7]; public int[,] GetSkinMap() { return skinMap; }
 
-=======
-    private int[] mapAttribute = new int[49];
-    public static int[,] mapstate = new int[7, 7];
-    public static int[,] skinMap = new int[7, 7];
->>>>>>> e02fd8718296b9d618b3129b3581453b5e23fe97
     private String[] prefabName = { "", "", "","","" };
 
    
