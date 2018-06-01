@@ -57,8 +57,10 @@ public class Bug : MonoBehaviour {
 
     //返回临近的活着的植物坐标
     List<MyPoint> FindNearPlant() {
-        int[,] skinMap = targetMap.GetComponent<GardenMap>().GetSkinMap();
-        int[,] mapState = targetMap.GetComponent<GardenMap>().GetMapState();
+
+        int[,] skinMap = GardenMap.skinMap;
+        int[,] mapState = GardenMap.mapstate;
+
         List<MyPoint> points = new List<MyPoint>();
         MyPoint nextPoint = new MyPoint(-1,-1);
 

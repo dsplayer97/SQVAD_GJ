@@ -5,8 +5,8 @@ using UnityEngine;
 public class GameController : MonoBehaviour
 {
 
-    public float sunPower;
-    public float moonPower;
+    public  float sunPower;
+    public  float moonPower;
     public float O2;
     public float CO2;
 
@@ -16,10 +16,11 @@ public class GameController : MonoBehaviour
 
     private GameObject[] plantList;
 
+
     public GameObject targetMap;
     private GardenMap gardenMap; public GardenMap GetGardenMap() { return gardenMap; }
 
-    public static int Round; //回合
+
 
     public static int Move; //行动
 
@@ -72,19 +73,19 @@ public class GameController : MonoBehaviour
         sunPower = sunPower + totalSunProduce;
         moonPower = moonPower + totalMoonProduce;
 
-        gardenMap = targetMap.GetComponent<GardenMap>();
+       
 
         O2CO2TotalRate = O2 / (O2 + CO2);
 
-        GameObject.Find("UIController").GetComponent<UIControl>().ChangeSunMoon(sunPower, moonPower);
-        GameObject.Find("UIController").GetComponent<UIControl>().ChangeAir(O2CO2TotalRate);
+        GameObject.Find("Main Camera").GetComponent<UIControl>().ChangeSunMoon(sunPower, moonPower);
+        GameObject.Find("Main Camera").GetComponent<UIControl>().ChangeAir(O2CO2TotalRate);
 
         Debug.Log("O2:" + O2.ToString());
         Debug.Log("CO2:" + CO2.ToString());
         Debug.Log("SunPower:" + sunPower.ToString());
         Debug.Log("MoonPower:" + moonPower.ToString());
 
-        Round += 1;
+        round += 1;
         Move = 3;
         UIControl.In_Round = true;
     }
@@ -92,6 +93,7 @@ public class GameController : MonoBehaviour
     //建造植物时消耗太阳能量
     void GrowConsumeSun(int delta)
     {
+        Debug.Log("sun:"+delta);
         sunPower = sunPower - delta;
     }
 
@@ -102,17 +104,20 @@ public class GameController : MonoBehaviour
     }
 
 
+
     public GameObject[] GetAllPlant() {
+
         return GameObject.FindGameObjectsWithTag("Plant");
     }
+
 
 
     //获取当前地图上哪个坐标长着植物
     public List<MyPoint> FindPlant()
     {
-        gardenMap = targetMap.GetComponent<GardenMap>();
-        int[,] skinMap = gardenMap.GetSkinMap();
-        int[,] mapState = gardenMap.GetMapState();
+        
+        int[,] skinMap = GardenMap.skinMap;
+        int[,] mapState = GardenMap.mapstate;
         List<MyPoint> points = new List<MyPoint>();
         for (int i = 0; i < skinMap.GetLength(0); i++)
         {

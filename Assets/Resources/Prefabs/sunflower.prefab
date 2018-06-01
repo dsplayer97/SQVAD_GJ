@@ -144,7 +144,7 @@ GameObject:
   - component: {fileID: 114616080234972754}
   m_Layer: 0
   m_Name: sunflower
-  m_TagString: Untagged
+  m_TagString: Plant
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -331,7 +331,7 @@ Transform:
   m_GameObject: {fileID: 1567187873947184}
   m_LocalRotation: {x: -0, y: 0.9924372, z: -0, w: 0.122753315}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 0}
   m_Children:
   - {fileID: 4338515885260424}
   - {fileID: 4304241185477252}
@@ -476,17 +476,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01012c84b4ebfb24f937e049bb96c7a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: 
-  sunCost: 0
-  moonCost: 0
-  sunProduce: 0
-  moonProduce: 0
-  CO2Produce: 0
-  O2Produce: 0
-  CO2Cost: 0
-  O2Cost: 0
-  buffO2Persent: 0
+  gameController: {fileID: 0}
+  name: sunflower
+  sunCost: 50
+  moonCost: 50
+  sunProduce: 10
+  moonProduce: 10
+  CO2Produce: 50
+  O2Produce: 20
+  CO2Cost: 30
+  O2Cost: 20
+  produceCD: 1
+  buffO2Persent: 10
   buffCO2Persent: 0
+  live: 0
+  infected: 0
 --- !u!137 &137894461696598494
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

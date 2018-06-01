@@ -584,7 +584,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1720699399}
         m_MethodName: RoundConsume
         m_Mode: 1
         m_Arguments:
@@ -6268,10 +6268,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fa94a5546d56804ba3d417889e534cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sunPower: 0
-  moonPower: 0
-  O2: 0
-  CO2: 0
+  sunPower: 50
+  moonPower: 50
+  O2: 50
+  CO2: 50
+  round: 0
 --- !u!114 &1720699400
 MonoBehaviour:
   m_ObjectHideFlags: 0

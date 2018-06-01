@@ -41,14 +41,23 @@ public class UIControl : MonoBehaviour {
 
             //}       
         }
-
+        GrowConsumeMoon();
+        GrowConsumeSun();
         MoveText.GetComponent<Text>().text = GameController.Move.ToString();
         
     }
 
-    public void Sun_Moon() //日月button执行函数
+    public void GrowConsumeSun() //种植物日消耗s
     {
-        ChangeSunMoon(10, 20);
+        
+
+        Sun.value = GameObject.Find("Main Camera").GetComponent<GameController>().sunPower;
+    }
+
+    public void GrowConsumeMoon() //种植物月消耗
+    {
+        
+        Moon.value = GameObject.Find("Main Camera").GetComponent<GameController>().moonPower;
     }
 
     public void ChangeSunMoon(float sun, float moon)  //日月能量槽改变函数
