@@ -46,9 +46,14 @@ public class UIControl : MonoBehaviour {
         
     }
 
-    public void Sun_Moon() //日月button执行函数
+    public void GrowConsumeSun(float sun) //种植物日消耗
     {
-        ChangeSunMoon(10, 20);
+        Sun.value -= sun;
+    }
+
+    public void GrowConsumeMoon(float moon) //种植物月消耗
+    {
+        Moon.value -= moon;
     }
 
     public void ChangeSunMoon(float sun, float moon)  //日月能量槽改变函数

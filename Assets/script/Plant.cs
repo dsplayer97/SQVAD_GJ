@@ -16,7 +16,7 @@ public class Plant : MonoBehaviour
     public float buffO2Persent;//用于计算氧气被buff影响的资源产出
     public float buffCO2Persent;//用于计算二氧化碳被buff影响的资源产出
 
-    public static bool live;//表示植物是否处于激活状态
+    public bool live = false;//表示植物是否处于激活状态
 
     // Use this for initialization
     void Start()

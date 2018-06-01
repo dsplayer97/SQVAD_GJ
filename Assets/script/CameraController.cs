@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,16 +11,16 @@ public class CameraController : MonoBehaviour {
     public GameObject spotlight;   
     public static GameObject aimGardenfield;
     private bool spotcanmove = true;
-
-    private String[] prefabName = { "", "", "", "", "" };//预设路径
-
-    public GameObject SelectArea;//选择面板
+    static bool SelectAreaIsShowed = false;  //选择面板是否出现    
+    public GameObject SelectArea;   //选择面板
+	 private String[] prefabName = { "Prefabs/sunflower", "", "", "", "" };//预设路径
 
     void Start () {
 
-        
-		
-	}
+        GameObject.Find("Main Camera").GetComponent<GameController>().RoundConsume();
+
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -28,8 +28,9 @@ public class CameraController : MonoBehaviour {
         if (Input.GetMouseButton(1))
         {
             rotatebasicpanel();
+            SelectArea_Hide();
         }
-        else
+        else if(SelectAreaIsShowed == false) //选择面板弹出时取消射线
         {
             raydetect();
         }
@@ -42,9 +43,7 @@ public class CameraController : MonoBehaviour {
     {
         spotlight.SetActive(false);
         float nor = Input.GetAxis("Mouse X");//获取鼠标的偏移量
-        //float nory = Input.GetAxis("Mouse Y");
         PlayerTrans.transform.RotateAround(PlayerTrans.transform.position, -Vector3.up, Time.deltaTime * rotateSpeed * nor);//每帧旋转空物体，相机也跟随旋转
-        //PlayerTrans.transform.RotateAround(PlayerTrans.transform.position, -Vector3.left, Time.deltaTime * rotateSpeed * nory);//每帧旋转空物体，相机也跟随旋转
     }
 
     private void raydetect()
@@ -55,23 +54,22 @@ public class CameraController : MonoBehaviour {
         RaycastHit getGround;
         if (Physics.Raycast(Cameraray, out getGround))
         {
+		    
             GameObject gameObject = getGround.transform.gameObject;
-            if (spotcanmove)//点击出现界面后光点不可移动
-            {
-                spotlight.transform.position = new Vector3(gameObject.transform.position.x, spotlight.transform.position.y, gameObject.transform.position.z);
-                spotlight.SetActive(true);
-            }
+			if(spotcanmove){
+            spotlight.transform.position = new Vector3(gameObject.transform.position.x, spotlight.transform.position.y, gameObject.transform.position.z);
+            spotlight.SetActive(true);
+			}
             int[] info = gameObject.GetComponent<touchtest>().testintarray;
-            
-            if (Input.GetMouseButtonDown(0))
+                   
+            if (Input.GetMouseButtonDown(0) && GameController.Move > 0)
             {
-                //spotcanmove = false;
-                Debug.Log("触发了");
-                aimGardenfield = gameObject;
+                aimGardenfield = gameObject;    
                 int[,] aimSkinmap = GardenMap.skinMap;
                 int[,] aimMapstate = GardenMap.mapstate;
-                if(aimSkinmap[info[0],info[1]] == 0)
+                if(aimSkinmap[info[0],info[1]] == 0) //点击未探索土地
                 {
+                    GameController.Move -= 1; //本回合行动点减1
                     //执行土地蒙层撤销动画
 
                     //将土地状态变为1（已探索）
@@ -80,10 +78,14 @@ public class CameraController : MonoBehaviour {
                 }else if(aimSkinmap[info[0], info[1]] == 1)
                 {
                     //界面参数
-                    spotcanmove = false;//设置光点不移动
+                    //通过状态判断显示不同面板
+
+
+
+                    spotcanmove = false;
                     SelectArea_Show();
                     SelectArea_Pos();
-                    Debug.Log("以探索");
+                    Debug.Log("已探索");
                 }
             }
             //Debug.Log(info[0] + "  " + info[1]);
@@ -92,11 +94,9 @@ public class CameraController : MonoBehaviour {
         }
         else
         {
-            if (spotcanmove)
-            {
-                spotlight.SetActive(false);
-            }
-            //spotlight.SetActive(false);
+		   if(spotcanmove){
+            spotlight.SetActive(false);
+			}
             aimGardenfield = null;
         }
     }
@@ -108,23 +108,20 @@ public class CameraController : MonoBehaviour {
     public void SelectArea_Show() //选择面板显示
     {
         SelectArea.SetActive(true);
-        
-
-        //SelectAreaIsShowed = true;
+        SelectAreaIsShowed = true;
     }
     public void SelectArea_Hide() //选择面板隐藏
     {
-        spotcanmove = true;
+	    spotcanmove = true;
         SelectArea.SetActive(false);
-        //SelectAreaIsShowed = false;
+        SelectAreaIsShowed = false;
     }
     public void PlantClicked() //种植物操作
     {
         GameController.Move -= 1;
+        loadprefab(0);
         Debug.Log("种");
         SelectArea_Hide();
-
-
     }
 
     public void NoPlantClicked() //不种
@@ -141,17 +138,20 @@ public class CameraController : MonoBehaviour {
         SelectArea_Hide();
     }
 
-
-    //加载预载到场景
-    public void loadprefab(int prefabType)
+public void loadprefab(int prefabtype)
     {
-        UnityEngine.Object prefabobject = Resources.Load(prefabName[prefabType], typeof(GameObject));
+        Debug.Log("执行了");
         //用加载得到的资源对象，实例化游戏对象，实现游戏物体的动态加载
-        GameObject prefabGameobject = Instantiate(prefabobject) as GameObject;
+        GameObject prefabGameobject = Instantiate(Resources.Load(prefabName[prefabtype])) as GameObject;
+        //Instantiate(prefabGameobject);
+        //Debug.Log(prefabGameobject.gameObject.name);
+        prefabGameobject.GetComponent<Plant>().live = true;
         GameObject parentObject = aimGardenfield;
         prefabGameobject.transform.parent = parentObject.transform;
-        prefabGameobject.transform.localScale = Vector2.one;
+        //prefabGameobject.transform.localScale = Vector2.one;
+        prefabGameobject.transform.localScale = new Vector3(80,80,80);
         prefabGameobject.transform.localPosition = Vector3.zero;
 
     }
+
 }
