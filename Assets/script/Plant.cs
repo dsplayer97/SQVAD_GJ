@@ -2,10 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+<<<<<<< HEAD
 public class Plant : MonoBehaviour {
 
     public GameObject gameController;
 
+=======
+public class Plant : MonoBehaviour
+{
+>>>>>>> e02fd8718296b9d618b3129b3581453b5e23fe97
     public string name;
     public int sunCost;
     public int moonCost;
@@ -20,6 +25,7 @@ public class Plant : MonoBehaviour {
     public float buffCO2Persent;//用于计算二氧化碳被buff影响的资源产出
     private float bugDebuffPersent;//表示害虫感染后的产出debuff
 
+<<<<<<< HEAD
     public bool live;//表示植物是否处于激活状态
     public bool infected;//表示植物是否处于被感染状态, true表示感染, false表示健康
 
@@ -34,9 +40,24 @@ public class Plant : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+=======
+    public static bool live;//表示植物是否处于激活状态
 
-	}
+    // Use this for initialization
+    void Start()
+    {
 
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+>>>>>>> e02fd8718296b9d618b3129b3581453b5e23fe97
+
+
+<<<<<<< HEAD
     
     public void ChangeLive() {
         live = !live;
@@ -64,10 +85,20 @@ public class Plant : MonoBehaviour {
 
     //建造植物时消耗阳光
     void CostSun() {
+=======
+    public void changeLive()
+    {
+        live = !live;
+    }
+
+    void CostSun()
+    {
+>>>>>>> e02fd8718296b9d618b3129b3581453b5e23fe97
         GameObject.Find("GameController").SendMessageUpwards("GrowConsumeSun", sunCost);
 
     }
 
+<<<<<<< HEAD
     //建造植物时消耗月亮
     void CostMoon() {
         GameObject.Find("GameController").SendMessageUpwards("GrowConsumeMoon", moonCost);
@@ -88,6 +119,32 @@ public class Plant : MonoBehaviour {
 
     public float GetMoonProduce(float O2CO2Rate) {
         return moonProduce * bugDebuffPersent;
+=======
+    void CostMoon()
+    {
+        GameObject.Find("GameController").SendMessageUpwards("GrowConsumeMoon", moonCost);
+    }
+
+
+    public float GetO2Produce(float O2CO2Rate)
+    {
+        return O2Produce;
+    }
+
+    public float GetCO2Produce(float O2CO2Rate)
+    {
+        return CO2Produce;
+    }
+
+    public float GetSunProduce(float O2CO2Rate)
+    {
+        return sunProduce;
+    }
+
+    public float GetMoonProduce(float O2CO2Rate)
+    {
+        return moonProduce;
+>>>>>>> e02fd8718296b9d618b3129b3581453b5e23fe97
     }
 
 }

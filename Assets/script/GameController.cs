@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameController : MonoBehaviour {
+public class GameController : MonoBehaviour
+{
 
     public float sunPower;
     public float moonPower;
@@ -15,6 +16,7 @@ public class GameController : MonoBehaviour {
 
     private GameObject[] plantList;
 
+<<<<<<< HEAD
     public GameObject targetMap;
     private GardenMap gardenMap; public GardenMap GetGardenMap() { return gardenMap; }
 
@@ -25,25 +27,48 @@ public class GameController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+=======
+    public static int Round; //回合
+
+    public static int Move; //行动
+
+    // Use this for initialization
+    void Start()
+    {
+        Move = 3;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+>>>>>>> e02fd8718296b9d618b3129b3581453b5e23fe97
         if (Input.GetKeyDown(KeyCode.Space))
         {
             RoundConsume();
         }
     }
 
+<<<<<<< HEAD
     //回合结束时进行资源结算
     void RoundConsume() {
+=======
+    public void RoundConsume()
+    {
+>>>>>>> e02fd8718296b9d618b3129b3581453b5e23fe97
         float totalO2Consume = 0;
         float totalCO2Consume = 0;
         float totalO2Produce = 0;
         float totalCO2Produce = 0;
         float totalSunProduce = 0;
         float totalMoonProduce = 0;
+        float O2CO2TotalRate = 0;
         O2CO2Rate = O2 / CO2;
         plantList = GetAllPlant();
-        foreach (GameObject i in plantList) {
+        foreach (GameObject i in plantList)
+        {
             Plant p = i.GetComponent<Plant>();
-            if (p.live){
+            if (Plant.live)
+            {
                 totalO2Consume = totalO2Consume + p.O2Cost;
                 totalCO2Consume = totalCO2Consume + p.CO2Cost;
                 totalO2Produce = totalO2Produce + p.GetO2Produce(O2CO2Rate);
@@ -57,15 +82,27 @@ public class GameController : MonoBehaviour {
         }
         O2 = O2 - totalO2Consume + totalO2Produce;
         CO2 = CO2 - totalCO2Consume + totalCO2Produce;
+
         sunPower = sunPower + totalSunProduce;
         moonPower = moonPower + totalMoonProduce;
 
+<<<<<<< HEAD
         gardenMap = targetMap.GetComponent<GardenMap>();
+=======
+        O2CO2TotalRate = O2 / (O2 + CO2);
+
+        GameObject.Find("UIController").GetComponent<UIControl>().ChangeSunMoon(sunPower, moonPower);
+        GameObject.Find("UIController").GetComponent<UIControl>().ChangeAir(O2CO2TotalRate);
+>>>>>>> e02fd8718296b9d618b3129b3581453b5e23fe97
 
         Debug.Log("O2:" + O2.ToString());
         Debug.Log("CO2:" + CO2.ToString());
         Debug.Log("SunPower:" + sunPower.ToString());
         Debug.Log("MoonPower:" + moonPower.ToString());
+
+        Round += 1;
+        Move = 3;
+        UIControl.In_Round = true;
     }
 
     //建造植物时消耗太阳能量
@@ -75,10 +112,12 @@ public class GameController : MonoBehaviour {
     }
 
     //建造植物时消耗月亮能量
-    void GrowConsumeMoon(int delta) {
+    void GrowConsumeMoon(int delta)
+    {
         moonPower = moonPower - delta;
     }
 
+<<<<<<< HEAD
     public GameObject[] GetAllPlant() {
         return GameObject.FindGameObjectsWithTag("Plant");
     }
@@ -104,4 +143,13 @@ public class GameController : MonoBehaviour {
         }
         return points;
     }
+=======
+    GameObject[] GetAllPlant()
+    {
+        return GameObject.FindGameObjectsWithTag("Plant");
+    }
+    
+
+
+>>>>>>> e02fd8718296b9d618b3129b3581453b5e23fe97
 }
