@@ -53,7 +53,7 @@ public class BugController : MonoBehaviour {
 
     //扩散感染
     void SpreadInfect() {
-        GameObject[] bugs = GameObject.FindGameObjectsWithTag("Bug");
+        //GameObject[] bugs = GameObject.FindGameObjectsWithTag("Bug");
         foreach (Bug bug in bugList) {
             if (GetRound() % bug.spreadCD == 0) {
                 bug.SpreadInfect();

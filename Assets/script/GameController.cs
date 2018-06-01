@@ -5,16 +5,16 @@ using UnityEngine;
 public class GameController : MonoBehaviour
 {
 
-    public float sunPower;
-    public float moonPower;
+    public  float sunPower;
+    public  float moonPower;
     public float O2;
     public float CO2;
 
     private float O2CO2Rate;
-
+    public int round;
     private GameObject[] plantList;
 
-    public static int Round; //回合
+    
 
     public static int Move; //行动
 
@@ -44,7 +44,6 @@ public class GameController : MonoBehaviour
         float O2CO2TotalRate = 0;
         O2CO2Rate = O2 / CO2;
         plantList = GetAllPlant();
-        //Debug.Log(plantList[0].gameObject.name);
         foreach (GameObject i in plantList)
         {
             Plant p = i.GetComponent<Plant>();
@@ -74,28 +73,47 @@ public class GameController : MonoBehaviour
         Debug.Log("SunPower:" + sunPower.ToString());
         Debug.Log("MoonPower:" + moonPower.ToString());
 
-        Round += 1;
+        round += 1;
         Move = 3;
         UIControl.In_Round = true;
     }
 
-    ////建造植物时消耗太阳能量
-    //void GrowConsumeSun(int delta)
-    //{
-    //    sunPower = sunPower - delta;
-    //}
+    //建造植物时消耗太阳能量
+    void GrowConsumeSun(int delta)
+    {
+        Debug.Log("sun:"+delta);
+        sunPower = sunPower - delta;
+    }
 
-    ////建造植物时消耗月亮能量
-    //void GrowConsumeMoon(int delta)
-    //{
-    //    moonPower = moonPower - delta;
-    //}
+    //建造植物时消耗月亮能量
+    void GrowConsumeMoon(int delta)
+    {
+        moonPower = moonPower - delta;
+    }
 
-    GameObject[] GetAllPlant()
+    public GameObject[] GetAllPlant()
     {
         return GameObject.FindGameObjectsWithTag("Plant");
     }
-    
 
+    public List<MyPoint> FindPlant()
+    {
+  
+        int[,] skinMap = GardenMap.skinMap;
+        int[,] mapState = GardenMap.mapstate;
+        List<MyPoint> points = new List<MyPoint>();
+        for (int i = 0; i < skinMap.GetLength(0); i++)
+        {
+            for (int j = 0; j < skinMap.GetLength(1); j++)
+            {
+                if (skinMap[i, j] == 1 && mapState[i, j] >= 7 && mapState[i, j] <= 11)
+                {
+                    MyPoint point = new MyPoint(i, j);
+                    points.Add(point);
+                }
+            }
+        }
+        return points;
+    }
 
 }

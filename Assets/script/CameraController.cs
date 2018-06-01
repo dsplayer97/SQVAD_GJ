@@ -120,6 +120,7 @@ public class CameraController : MonoBehaviour {
     {
         GameController.Move -= 1;
         loadprefab(0);
+
         Debug.Log("种");
         SelectArea_Hide();
     }
@@ -146,7 +147,12 @@ public void loadprefab(int prefabtype)
         //Instantiate(prefabGameobject);
         //Debug.Log(prefabGameobject.gameObject.name);
         prefabGameobject.GetComponent<Plant>().live = true;
+        prefabGameobject.GetComponent<Plant>().CostSun();
+        prefabGameobject.GetComponent<Plant>().CostMoon();
+        prefabGameobject.GetComponent<Plant>().Grow(aimGardenfield.GetComponent<touchtest>().testintarray[0], aimGardenfield.GetComponent<touchtest>().testintarray[1]);
+
         GameObject parentObject = aimGardenfield;
+
         prefabGameobject.transform.parent = parentObject.transform;
         //prefabGameobject.transform.localScale = Vector2.one;
         prefabGameobject.transform.localScale = new Vector3(80,80,80);
