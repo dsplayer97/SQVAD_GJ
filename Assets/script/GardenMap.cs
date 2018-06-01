@@ -10,7 +10,7 @@ public class GardenMap : MonoBehaviour
     private int[] mapAttribute = new int[49];
     public static int[,] mapstate = new int[7, 7];
     public static int[,] skinMap = new int[7, 7];
-    private String[] prefabName = { "", "", "","","" };
+    
 
    
 
@@ -134,18 +134,8 @@ public class GardenMap : MonoBehaviour
         }
         return b;
     }
-    //加载预载到场景
-    public void loadprefab(int prefabType,Vector3 position) 
-    {
-        UnityEngine.Object prefabobject = Resources.Load(prefabName[prefabType], typeof(GameObject));
-        //用加载得到的资源对象，实例化游戏对象，实现游戏物体的动态加载
-        GameObject prefabGameobject = Instantiate(prefabobject) as GameObject;
-        GameObject parentObject = CameraController.aimGardenfield;
-        prefabGameobject.transform.parent = parentObject.transform;
-        prefabGameobject.transform.localScale = Vector2.one;
-        prefabGameobject.transform.localPosition = Vector3.zero;
-
-    }
+    
+   
 
     /*
     public int[,] getskinMap()

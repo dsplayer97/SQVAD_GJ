@@ -27,10 +27,12 @@ public class loadcontrol : MonoBehaviour {
         {
             case 1:
                 loadID = 2;//0 mainscense  1 loadscense 2 elect
+                initmapResourceData(1);
                 //SceneManager.LoadScene("loadscense");
                 lunchmode = 1;
                 break;
             case 2:
+                initmapResourceData(2);
                 loadID = 2;//0 mainscense  1 loadscense 2 elect
                 //SceneManager.LoadScene("loadscense");
                 lunchmode = 2;
