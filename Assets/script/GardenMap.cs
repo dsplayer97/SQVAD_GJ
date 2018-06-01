@@ -3,32 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class GardenMap : MonoBehaviour {
+public class GardenMap : MonoBehaviour 
+{
 
 
     private int[] mapAttribute = new int[49];
-    private int[,] mapstate = new int[7, 7];
-    private static int[,] skinMap = new int[7, 7];
+    public static int[,] mapstate = new int[7, 7];
+    public static int[,] skinMap = new int[7, 7];
     private String[] prefabName = { "", "", "","","" };
 
-    private  static GardenMap gardenMap;
+   
 
-    public static GardenMap GetGardenMap()
+    /*public static GardenMap GetGardenMap()
     {
         return gardenMap;
-    }
+    }*/
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         //预设，记得该为调用关卡读取参数
         int[] attribute = new int[6];
         //初始化关卡内容参数
-        initmapAttribute(attribute[0], attribute[1], attribute[2], attribute[3], attribute[4], attribute[5]);
+        initmapAttribute(1,2,3,4,5,6);
         //初始化地图
         initmapstate();
         initskinMap();
-
-		
+        	
 	}
 	
 	// Update is called once per frame
@@ -66,24 +66,30 @@ public class GardenMap : MonoBehaviour {
         for (int i = f1 + f2 + f3 + f4 + f5; i < f1 + f2 + f3 + f4 + f5 + emptyfield; i++)
         {
             mapAttribute[i] = 6;
+            Debug.Log(i);
         }
         //剩余处放入空
         for (int i = f1 + f2 + f3 + f4 + f5; i < 49; i++)
         {
             mapAttribute[i] = 0;
+            //Debug.Log(i);
         }
 
     }
     //初始化地图
     private void initmapstate()
     {
-        int[] randomarray = GetRandomArray(49, 0, 49);
-        
+        int[] randomarray = GetRandomArray(49, 0, 48);
+        //Debug.Log(randomarray.Length);
+        // Debug.Log(mapAttribute[49]);
+     
         for(int i = 0; i < 7; i++)
         {
             for(int j = 0;j < 7; j++)
             {
+               // Debug.Log(randomarray[48]); 
                 mapstate[i, j] = mapAttribute[randomarray[i*7+j]];
+                
             }
         }
 
@@ -141,6 +147,17 @@ public class GardenMap : MonoBehaviour {
 
     }
 
-
-
+    /*
+    public int[,] getskinMap()
+    {
+        return skinMap;
+    }
+    public int[,] getmapstate()
+    {
+        return mapstate;
+    }
+    public void setskinMap(int[] position,int state)
+    {
+        skinMap[position[0], position[1]] = state;
+    }*/
 }

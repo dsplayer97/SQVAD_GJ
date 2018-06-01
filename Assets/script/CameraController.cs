@@ -13,7 +13,7 @@ public class CameraController : MonoBehaviour {
 
     void Start () {
 
-
+        
 		
 	}
 	
@@ -53,8 +53,24 @@ public class CameraController : MonoBehaviour {
             spotlight.SetActive(true);
             int[] info = gameObject.GetComponent<touchtest>().testintarray;
             aimGardenfield = gameObject;
+            if (Input.GetMouseButtonDown(0))
+            {
+                int[,] aimSkinmap = GardenMap.skinMap;
+                int[,] aimMapstate = GardenMap.mapstate;
+                if(aimSkinmap[info[0],info[1]] == 0)
+                {
+                    //执行土地蒙层撤销动画
 
-            Debug.Log(info[0] + "  " + info[1]);
+                    //将土地状态变为1（已探索）
+                    GardenMap.skinMap[info[0],info[1]] = 1;
+                    Debug.Log("探索中");
+                }else if(aimSkinmap[info[0], info[1]] == 1)
+                {
+                    //界面参数
+                    Debug.Log("以探索");
+                }
+            }
+            //Debug.Log(info[0] + "  " + info[1]);
             
 
         }
@@ -66,7 +82,7 @@ public class CameraController : MonoBehaviour {
     }
 
    
-
+    
     
 
 }
