@@ -12,6 +12,9 @@ public class GardenMap : MonoBehaviour
     public static int[,] skinMap = new int[7, 7];
     
 
+    private String[] prefabName = { "", "", "","","" };
+
+
    
 
     /*public static GardenMap GetGardenMap()

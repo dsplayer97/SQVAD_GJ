@@ -41,7 +41,10 @@ public class Plant : MonoBehaviour
     
     public void ChangeLive() {
         live = !live;
+
     }
+
+
 
     //植物开始生长, 初始化
     public void Grow(int x, int y) {
@@ -59,21 +62,29 @@ public class Plant : MonoBehaviour
 
     //植物恢复健康
     public void Cure() {
+
         infected = false;
         bugDebuffPersent = 1;
     }
 
+
+
+
+
     //建造植物时消耗阳光
 
 
-   public void CostSun()
+  
+
+
+    void CostSun()
     {
-        GameObject.Find("Main Camera").SendMessageUpwards("GrowConsumeSun", sunCost);
+        GameObject.Find("GameController").SendMessageUpwards("GrowConsumeSun", sunCost);
     }
 
     //建造植物时消耗月亮
-   public  void CostMoon() {
-        GameObject.Find("Main Camera").SendMessageUpwards("GrowConsumeMoon", moonCost);
+    void CostMoon() {
+        GameObject.Find("GameController").SendMessageUpwards("GrowConsumeMoon", moonCost);
     }
 
     //根据氧气二氧化碳比例和是否被害虫感染返回氧气产出
@@ -88,6 +99,7 @@ public class Plant : MonoBehaviour
     public float GetSunProduce(float O2CO2Rate) {
         return sunProduce * bugDebuffPersent;
     }
+
 
     public float GetMoonProduce(float O2CO2Rate) {
         return moonProduce * bugDebuffPersent;

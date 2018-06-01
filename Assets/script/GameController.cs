@@ -10,11 +10,17 @@ public class GameController : MonoBehaviour
     public float O2;
     public float CO2;
 
-    private float O2CO2Rate;
     public int round;
+
+    private float O2CO2Rate;
+
     private GameObject[] plantList;
 
-    
+
+    public GameObject targetMap;
+    private GardenMap gardenMap; public GardenMap GetGardenMap() { return gardenMap; }
+
+
 
     public static int Move; //行动
 
@@ -33,6 +39,7 @@ public class GameController : MonoBehaviour
         }
     }
 
+    //回合结束时进行资源结算
     public void RoundConsume()
     {
         float totalO2Consume = 0;
@@ -53,8 +60,11 @@ public class GameController : MonoBehaviour
                 totalCO2Consume = totalCO2Consume + p.CO2Cost;
                 totalO2Produce = totalO2Produce + p.GetO2Produce(O2CO2Rate);
                 totalCO2Produce = totalCO2Produce + p.GetCO2Produce(O2CO2Rate);
-                totalSunProduce = totalSunProduce + p.GetSunProduce(O2CO2Rate);
-                totalMoonProduce = totalMoonProduce + p.GetMoonProduce(O2CO2Rate);
+                if (round % p.produceCD == 0)
+                {
+                    totalSunProduce = totalSunProduce + p.GetSunProduce(O2CO2Rate);
+                    totalMoonProduce = totalMoonProduce + p.GetMoonProduce(O2CO2Rate);
+                }
             }
         }
         O2 = O2 - totalO2Consume + totalO2Produce;
@@ -62,6 +72,8 @@ public class GameController : MonoBehaviour
 
         sunPower = sunPower + totalSunProduce;
         moonPower = moonPower + totalMoonProduce;
+
+        gardenMap = targetMap.GetComponent<GardenMap>();
 
         O2CO2TotalRate = O2 / (O2 + CO2);
 
@@ -91,16 +103,21 @@ public class GameController : MonoBehaviour
         moonPower = moonPower - delta;
     }
 
-    public GameObject[] GetAllPlant()
-    {
+
+
+    public GameObject[] GetAllPlant() {
+
         return GameObject.FindGameObjectsWithTag("Plant");
     }
 
+
+
+    //获取当前地图上哪个坐标长着植物
     public List<MyPoint> FindPlant()
     {
-  
-        int[,] skinMap = GardenMap.skinMap;
-        int[,] mapState = GardenMap.mapstate;
+        gardenMap = targetMap.GetComponent<GardenMap>();
+        int[,] skinMap = gardenMap.GetSkinMap();
+        int[,] mapState = gardenMap.GetMapState();
         List<MyPoint> points = new List<MyPoint>();
         for (int i = 0; i < skinMap.GetLength(0); i++)
         {
@@ -115,5 +132,4 @@ public class GameController : MonoBehaviour
         }
         return points;
     }
-
 }
