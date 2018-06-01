@@ -6,9 +6,10 @@ using System;
 public class GardenMap : MonoBehaviour {
 
 
-    private int[] mapAttribute = new int[49];
-    private int[,] mapstate = new int[7, 7];
-    private static int[,] skinMap = new int[7, 7];
+    private int[] mapAttribute = new int[49]; public int[] GetMapAttribute() { return mapAttribute; }
+    private int[,] mapstate = new int[7, 7]; public int[,] GetMapState() { return mapstate; }
+    private static int[,] skinMap = new int[7, 7]; public int[,] GetSkinMap() { return skinMap; }
+
     private String[] prefabName = { "", "", "","","" };
 
     private  static GardenMap gardenMap;

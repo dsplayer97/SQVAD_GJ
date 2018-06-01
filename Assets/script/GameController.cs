@@ -9,12 +9,17 @@ public class GameController : MonoBehaviour {
     public float O2;
     public float CO2;
 
+    public int round;
+
     private float O2CO2Rate;
 
     private GameObject[] plantList;
 
-	// Use this for initialization
-	void Start () {
+    public GameObject targetMap;
+    private GardenMap gardenMap; public GardenMap GetGardenMap() { return gardenMap; }
+
+    // Use this for initialization
+    void Start () {
 		
 	}
 	
@@ -26,6 +31,7 @@ public class GameController : MonoBehaviour {
         }
     }
 
+    //回合结束时进行资源结算
     void RoundConsume() {
         float totalO2Consume = 0;
         float totalCO2Consume = 0;
@@ -42,14 +48,20 @@ public class GameController : MonoBehaviour {
                 totalCO2Consume = totalCO2Consume + p.CO2Cost;
                 totalO2Produce = totalO2Produce + p.GetO2Produce(O2CO2Rate);
                 totalCO2Produce = totalCO2Produce + p.GetCO2Produce(O2CO2Rate);
-                totalSunProduce = totalSunProduce + p.GetSunProduce(O2CO2Rate);
-                totalMoonProduce = totalMoonProduce + p.GetMoonProduce(O2CO2Rate);
+                if (round % p.produceCD == 0)
+                {
+                    totalSunProduce = totalSunProduce + p.GetSunProduce(O2CO2Rate);
+                    totalMoonProduce = totalMoonProduce + p.GetMoonProduce(O2CO2Rate);
+                }
             }
         }
         O2 = O2 - totalO2Consume + totalO2Produce;
         CO2 = CO2 - totalCO2Consume + totalCO2Produce;
         sunPower = sunPower + totalSunProduce;
         moonPower = moonPower + totalMoonProduce;
+
+        gardenMap = targetMap.GetComponent<GardenMap>();
+
         Debug.Log("O2:" + O2.ToString());
         Debug.Log("CO2:" + CO2.ToString());
         Debug.Log("SunPower:" + sunPower.ToString());
@@ -67,7 +79,29 @@ public class GameController : MonoBehaviour {
         moonPower = moonPower - delta;
     }
 
-    GameObject[] GetAllPlant() {
+    public GameObject[] GetAllPlant() {
         return GameObject.FindGameObjectsWithTag("Plant");
+    }
+
+
+    //获取当前地图上哪个坐标长着植物
+    public List<MyPoint> FindPlant()
+    {
+        gardenMap = targetMap.GetComponent<GardenMap>();
+        int[,] skinMap = gardenMap.GetSkinMap();
+        int[,] mapState = gardenMap.GetMapState();
+        List<MyPoint> points = new List<MyPoint>();
+        for (int i = 0; i < skinMap.GetLength(0); i++)
+        {
+            for (int j = 0; j < skinMap.GetLength(1); j++)
+            {
+                if (skinMap[i, j] == 1 && mapState[i, j] >= 7 && mapState[i, j] <= 11)
+                {
+                    MyPoint point = new MyPoint(i, j);
+                    points.Add(point);
+                }
+            }
+        }
+        return points;
     }
 }
