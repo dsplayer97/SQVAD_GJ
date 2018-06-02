@@ -21,12 +21,15 @@ public class Plant : MonoBehaviour
     public float buffCO2Persent;//用于计算二氧化碳被buff影响的资源产出
     private float bugDebuffPersent;//表示害虫感染后的产出debuff
 
+    public int hp;//植物的生命值, 感染状态下每回合减1, 减到0植物死亡
     public bool live;//表示植物是否处于激活状态
     public bool infected;//表示植物是否处于被感染状态, true表示感染, false表示健康
 
     private MyPoint point; public MyPoint GetPoint() { return point; } public void SetPoint(MyPoint _point) { point = _point; } //表示植物的坐标 
 
-    
+    void Awake() {
+
+    }
 
     // Use this for initialization
     void Start () {
@@ -41,7 +44,6 @@ public class Plant : MonoBehaviour
     
     public void ChangeLive() {
         live = !live;
-
     }
 
 
@@ -51,6 +53,7 @@ public class Plant : MonoBehaviour
         point = new MyPoint(x, y);
         live = true;
         infected = false;
+        hp = 5;
         bugDebuffPersent = 1;
     }
 
@@ -58,25 +61,31 @@ public class Plant : MonoBehaviour
     public void Infect() {
         infected = true;
         bugDebuffPersent = 0.5f;
+        Debug.Log("我被感染拉!" + this.point.ToString());
     }
 
     //植物恢复健康
     public void Cure() {
-
+        hp = 5;
         infected = false;
         bugDebuffPersent = 1;
     }
 
-
-
+    //hp减1, 减到0就死亡
+    public bool HpDown() {
+        hp = hp - 1;
+        if (hp == 0)
+        {
+            live = false;
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 
 
     //建造植物时消耗阳光
-
-
-  
-
-
     public void CostSun()
     {
         GameObject.Find("Main Camera").SendMessageUpwards("GrowConsumeSun", sunCost);

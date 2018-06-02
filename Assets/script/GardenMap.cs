@@ -27,7 +27,7 @@ public class GardenMap : MonoBehaviour
         //预设，记得该为调用关卡读取参数
         int[] attribute = new int[6];
         //初始化关卡内容参数
-        initmapAttribute(1,2,3,4,5,6);
+        initmapAttribute(49,0,0,0,0,0);
         //初始化地图
         initmapstate();
         initskinMap();

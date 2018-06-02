@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BugController : MonoBehaviour {
 
-    public GameObject targetMap;
+    //public GameObject targetMap;
     public GameObject gameController;
 
     private GardenMap gardenMap;
@@ -13,12 +13,16 @@ public class BugController : MonoBehaviour {
 
     private int round;
 
+    void Awake() {
+        //gameController = GameObject.Find("GameController");
+        bugList = new List<Bug>();
+    }
 
 
 	// Use this for initialization
 	void Start () {
-        gameController = GameObject.Find("GameController");
-        bugList = new List<Bug>();
+        
+        
 	}
 	
 	// Update is called once per frame
@@ -37,25 +41,25 @@ public class BugController : MonoBehaviour {
     }
 
     //感染植物
-    void Infect() {
+    public void Infect() {
         round = GetRound();
-        if (round >= 10) {
+        if (round >= 5) {
             List<MyPoint> points = FindPlant();
-            int randomNum = Random.Range(0, points.Count);
-            if (points.Count!=0) {
+            //int randomNum = Random.Range(0, points.Count);
+            //Debug.Log(points.Count);
+            if (points.Count != 0) {
                 Bug bug = new Bug();
-                if (bug.Infect(points[randomNum])) {
+                Debug.Log(points[0].ToString());
+                if (bug.Infect(points[0])) {
                     bugList.Add(bug);
+
                 }
             }
         }
     }
 
     //扩散感染
-    void SpreadInfect() {
-
-        //GameObject[] bugs = GameObject.FindGameObjectsWithTag("Bug");
-
+    public void SpreadInfect() {
         foreach (Bug bug in bugList) {
             if (GetRound() % bug.spreadCD == 0) {
                 bug.SpreadInfect();
@@ -65,5 +69,20 @@ public class BugController : MonoBehaviour {
 
     void AddBug(Bug bug) {
         bugList.Add(bug);
+    }
+
+    //杀死指定坐标的害虫
+    void KillBug(MyPoint _point) {
+        foreach (GameObject i in gameController.GetComponent<GameController>().plantList) {
+            Plant p = i.GetComponent<Plant>();
+            if (p.GetPoint().equal(_point)) {
+                p.Cure();
+            }
+        }
+        foreach (Bug b in bugList) {
+            if (b.GetPoint().equal(_point)) {
+                bugList.Remove(b);
+            }
+        }
     }
 }
