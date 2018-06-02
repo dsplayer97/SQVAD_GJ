@@ -69,8 +69,8 @@ public class GameController : MonoBehaviour
             if (p.infected)
             {
                 if (p.HpDown())
-                {
-                    switch(GardenMap.mapstate[p.GetPoint().GetX(), p.GetPoint().GetY()])
+                {   
+                    switch (GardenMap.mapstate[p.GetPoint().GetX(), p.GetPoint().GetY()])
                     {
                         case 7:
                             GardenMap.mapstate[p.GetPoint().GetX(), p.GetPoint().GetY()] = 1;
@@ -86,7 +86,7 @@ public class GameController : MonoBehaviour
                             break;
                     }
                     Destroy(i);
-
+                    bugController.GetComponent<BugController>().removeBug(p.GetPoint());
                 }
             }
             if (p.live)
@@ -155,13 +155,13 @@ public class GameController : MonoBehaviour
     }
 
     //建造植物时消耗太阳能量
-    void GrowConsumeSun(int delta){
+    public void GrowConsumeSun(int delta){
         Debug.Log("sun:"+delta);
         sunPower = sunPower - delta;
     }
 
     //建造植物时消耗月亮能量
-    void GrowConsumeMoon(int delta){
+    public void GrowConsumeMoon(int delta){
         moonPower = moonPower - delta;
     }
 
@@ -194,24 +194,30 @@ public class GameController : MonoBehaviour
     }
 
     public void StartInfect() {
-        if (round == 5)
+        if (round % 5 == 0)
         {
-           bugController.GetComponent<BugController>().Infect();
+            for (int i = 0; i < round / 5; i++)
+            {
+                bugController.GetComponent<BugController>().Infect();
+            }
         }
         bugController.GetComponent<BugController>().SpreadInfect();
     }
 
 
     public void SunBurst() {
-        sunPower = sunPower - 20;
-        O2 = O2 + 40;
+        sunPower = sunPower - 300;
+        O2 = 500;
+        CO2 = 500;
         float O2CO2TotalRate = O2 / (O2 + CO2);
         GameObject.Find("Main Camera").GetComponent<UIControl>().ChangeSunMoon(sunPower, moonPower);
         GameObject.Find("Main Camera").GetComponent<UIControl>().ChangeAir(O2CO2TotalRate);
     }
 
     public void MoonSword(MyPoint point) {
+        moonPower = moonPower - 300;
         bugController.GetComponent<BugController>().KillBug(point);
+        Debug.Log("MoonSwordActive");
     }
 
 }

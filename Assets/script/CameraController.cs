@@ -15,12 +15,13 @@ public class CameraController : MonoBehaviour
     private bool spotcanmove = true;
     static bool SelectAreaIsShowed = false;  //选择面板是否出现 
     static bool Info_RemoveIsShowed = false;  //信息删除面板是否出现
+    static bool MoonSkillTrigger = false;  //月亮技能状态
     public GameObject SelectArea;   //选择面板
     public GameObject Info_RemovePanel;  //信息和删除按钮
     public GameObject Info_Text;  //信息文字
     public GameObject PlantInfo_Text;  //种花消费信息文字
     public GameObject plantbutton;  //种植按钮
-                                    // public GameObject Noplantbutton;  //不种按钮
+                                    
     public GameObject Repairbutton;  //修复按钮
     public GameObject UImesh;
     public Text plantName;
@@ -77,99 +78,129 @@ public class CameraController : MonoBehaviour
         if (Physics.Raycast(Cameraray, out getGround))
         {
 
-            GameObject gameObject = getGround.transform.gameObject;
-            if (spotcanmove)
-            {
-                spotlight.transform.position = new Vector3(gameObject.transform.position.x, spotlight.transform.position.y, gameObject.transform.position.z);
-                spotlight.SetActive(true);
-            }
-            int[] info = gameObject.GetComponent<touchtest>().testintarray;
-
-            if (Input.GetMouseButtonDown(0))
-            {
-                aimGardenfield = gameObject;
-                int[,] aimSkinmap = GardenMap.skinMap;
-                int[,] aimMapstate = GardenMap.mapstate;
-               // Debug.Log(aimMapstate[info[0], info[1]]);
-                if (aimMapstate[info[0], info[1]] >= 7 && aimMapstate[info[0], info[1]] <= 11)
+                GameObject gameObject = getGround.transform.gameObject;
+                if (spotcanmove)
                 {
-                    //已有花操作
-                    spotcanmove = false;
-                    Info_RemovePanel_Show(info);
-                    Info_RemovePanel_Pos();
-                    //Debug.Log(aimGardenfield.name);
-
-
+                    spotlight.transform.position = new Vector3(gameObject.transform.position.x, spotlight.transform.position.y, gameObject.transform.position.z);
+                    spotlight.SetActive(true);
                 }
-                else
+                int[] info = gameObject.GetComponent<touchtest>().testintarray;
+
+                //未激活月亮技能
+                if (Input.GetMouseButtonDown(0) && MoonSkillTrigger == false)
                 {
-                    if (aimSkinmap[info[0], info[1]] == 0 && GameController.Move > 0) //点击未探索土地
+                    aimGardenfield = gameObject;
+                    int[,] aimSkinmap = GardenMap.skinMap;
+                    int[,] aimMapstate = GardenMap.mapstate;
+                    //Debug.Log("location?" + aimMapstate[info[0], info[1]]);
+
+
+                    if (aimMapstate[info[0], info[1]] >= 7 && aimMapstate[info[0], info[1]] <= 11)
                     {
-                        GameController.Move -= 1; //本回合行动点减1
-                                                  //执行土地蒙层撤销动画
-                        if (GardenMap.mapstate[info[0], info[1]] >= 1 && GardenMap.mapstate[info[0], info[1]] <= 3)
-                        {
-                            aimGardenfield.GetComponent<Renderer>().material = normalfield;
-                        }else if(GardenMap.mapstate[info[0], info[1]] == 6)
-                        {
-                            aimGardenfield.GetComponent<Renderer>().material = seadfield;
-                        }
-                        else
-                        {
-                            aimGardenfield.GetComponent<Renderer>().material = badfield;
-                        }
-                        //将土地状态变为1（已探索）
-                        GardenMap.skinMap[info[0], info[1]] = 1;
-                        Debug.Log("探索中");
-                        //spotcanmove = false;
-                        Debug.Log("info:" + info[0] + " " + info[1]);
-                        //SelectArea_Show(info);
-                    }
-                    else if (aimSkinmap[info[0], info[1]] == 1 && aimMapstate[info[0], info[1]] != 0)
-                    {
+                        //已有花操作
+
                         spotcanmove = false;
+                        Info_RemovePanel_Show(info);
+                        Info_RemovePanel_Pos();
+                        //Debug.Log(aimGardenfield.name);
 
-                        //Debug.Log("info:" + info[0] + " " + info[1]);
 
-                        Debug.Log("info:" + info[0] + " " + info[1]);
-
-                        SelectArea_Show(info);
                     }
-
-                    /*SelectArea.SetActive(true);
-                    Debug.Log(GardenMap.mapstate[info[0], info[1]]);
-                    if (GardenMap.mapstate[info[0], info[1]] >= 1 && GardenMap.mapstate[info[0], info[1]] <= 5)
+                    else
                     {
-                        Debug.Log("到这了");
-                        Repairbutton.SetActive(false);
-                        plantName.text = Plantnamelist[GardenMap.mapstate[info[0], info[1]] - 1];
-                        plantbutton.SetActive(true);
-                        Noplantbutton.SetActive(true);
-                    }
-                    else if (GardenMap.mapstate[info[0], info[1]] == 6)
-                    {
-                        Repairbutton.SetActive(true);
-                        plantbutton.SetActive(false);
-                        Noplantbutton.SetActive(false);
-                    }
+                        if (aimSkinmap[info[0], info[1]] == 0 && GameController.Move > 0) //点击未探索土地
+                        {
+                            GameController.Move -= 1; //本回合行动点减1
+                                                        //执行土地蒙层撤销动画
+                            if (GardenMap.mapstate[info[0], info[1]] >= 1 && GardenMap.mapstate[info[0], info[1]] <= 3)
+                            {
+                                aimGardenfield.GetComponent<Renderer>().material = normalfield;
+                            }else if(GardenMap.mapstate[info[0], info[1]] == 6)
+                            {
+                                aimGardenfield.GetComponent<Renderer>().material = seadfield;
+                            }
+                            else
+                            {
+                                aimGardenfield.GetComponent<Renderer>().material = badfield;
+                            }
+                            //将土地状态变为1（已探索）
+                            GardenMap.skinMap[info[0], info[1]] = 1;
+                            Debug.Log("探索中");
+                            //spotcanmove = false;
+                            Debug.Log("info:" + info[0] + " " + info[1]);
+                            //SelectArea_Show(info);
+                        }
+                        else if (aimSkinmap[info[0], info[1]] == 1 && aimMapstate[info[0], info[1]] != 0)
+                        {
+                            spotcanmove = false;
+
+                            //Debug.Log("info:" + info[0] + " " + info[1]);
+
+                            Debug.Log("info:" + info[0] + " " + info[1]);
+
+                            SelectArea_Show(info);
+                        }
+
+                        /*SelectArea.SetActive(true);
+                        Debug.Log(GardenMap.mapstate[info[0], info[1]]);
+                        if (GardenMap.mapstate[info[0], info[1]] >= 1 && GardenMap.mapstate[info[0], info[1]] <= 5)
+                        {
+                            Debug.Log("到这了");
+                            Repairbutton.SetActive(false);
+                            plantName.text = Plantnamelist[GardenMap.mapstate[info[0], info[1]] - 1];
+                            plantbutton.SetActive(true);
+                            Noplantbutton.SetActive(true);
+                        }
+                        else if (GardenMap.mapstate[info[0], info[1]] == 6)
+                        {
+                            Repairbutton.SetActive(true);
+                            plantbutton.SetActive(false);
+                            Noplantbutton.SetActive(false);
+                        }
 
 
-                    SelectAreaIsShowed = true;*/
-                    SelectArea_Pos();
-                   // Debug.Log("已探索");
+                        SelectAreaIsShowed = true;*/
+                        SelectArea_Pos();
+                        // Debug.Log("已探索");
+                    }
                 }
-            }
-            //Debug.Log(info[0] + "  " + info[1]);
+                //Debug.Log(info[0] + "  " + info[1]);
 
 
-        }
-        else
-        {
-            if (spotcanmove)
+        
+            else
             {
-                spotlight.SetActive(false);
+                //激活月亮技能
+                if (Input.GetMouseButtonDown(0) && MoonSkillTrigger == true)
+                {
+                    aimGardenfield = gameObject;
+                    int[,] aimSkinmap = GardenMap.skinMap;
+                    int[,] aimMapstate = GardenMap.mapstate;
+                    //Debug.Log("location?" + aimMapstate[info[0], info[1]]);
+                    int[] pos = gameObject.GetComponent<touchtest>().testintarray;
+
+                    if (aimMapstate[pos[0], pos[1]] >= 7 && aimMapstate[pos[0], pos[1]] <= 11)
+                    {
+                        //灭虫
+                        Debug.Log("进条件");
+                        GameObject.Find("Main Camera").GetComponent<GameController>().MoonSword(new MyPoint(pos[0], pos[1]));
+
+                        MoonSkillTrigger = false;
+                        //Debug.Log(aimGardenfield.name);
+                    }
+                    else
+                    {
+                        MoonSkillTrigger = false;
+                    }
+                }
+  
+                    
+                if (spotcanmove)
+                {
+                    spotlight.SetActive(false);
+                }
+                aimGardenfield = null;
             }
-            aimGardenfield = null;
         }
     }
 
@@ -365,6 +396,12 @@ public class CameraController : MonoBehaviour
 
         }
 
+    }
+
+    public void MoonSkillClicked()
+    {
+        MoonSkillTrigger = true;
+        Debug.Log("触发月亮技能");
     }
 
 }

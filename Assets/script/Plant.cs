@@ -7,7 +7,6 @@ public class Plant : MonoBehaviour
 
     public GameObject gameController;
     private Animator animator;
-    public string name;
     public int sunCost;
     public int moonCost;
     public int sunProduce;
@@ -61,7 +60,6 @@ public class Plant : MonoBehaviour
 
     
     public void ChangeLive() {
-
         live = !live;
     }
 
@@ -92,22 +90,19 @@ public class Plant : MonoBehaviour
         hp = 5;
         infected = false;
         bugDebuffPersent = 1;
+        Debug.Log("我被治好了" + point.ToString());
     }
 
     //hp减1, 减到0就死亡
     public bool HpDown() {
-
         hp = hp - 1;
         if (hp == 0)
         {
-            live = false;
-
+            this.live = false;
             animator.SetBool("die", true);
             return true;
         }
-
         else {
-
             return false;
         }
     }
@@ -116,13 +111,15 @@ public class Plant : MonoBehaviour
     //建造植物时消耗阳光
     public void CostSun()
     {
-        GameObject.Find("Main Camera").SendMessageUpwards("GrowConsumeSun", sunCost);
+        //GameObject.Find("Main Camera").SendMessageUpwards("GrowConsumeSun", sunCost);
+        GameObject.Find("Main Camera").GetComponent<GameController>().GrowConsumeSun(sunCost);
     }
 
     //建造植物时消耗月亮
     public void CostMoon()
     {
-        GameObject.Find("Main Camera").SendMessageUpwards("GrowConsumeMoon", moonCost);
+        //GameObject.Find("Main Camera").SendMessageUpwards("GrowConsumeMoon", moonCost);
+        GameObject.Find("Main Camera").GetComponent<GameController>().GrowConsumeMoon(moonCost);
     }
 
     //根据氧气二氧化碳比例和是否被害虫感染返回氧气产出
@@ -132,11 +129,11 @@ public class Plant : MonoBehaviour
     public float GetO2Produce(float O2CO2Rate) {
         if (O2CO2Rate > 0.7)
         {
-            return O2Produce * bugDebuffPersent * 0.7f;
+            return O2Produce * bugDebuffPersent * 0.5f;
         }
         else if (O2CO2Rate < 0.3)
         {
-            return O2Produce * bugDebuffPersent * 1.3f;
+            return O2Produce * bugDebuffPersent * 1.5f;
         }
         else
         {
@@ -147,11 +144,11 @@ public class Plant : MonoBehaviour
     public float GetCO2Produce(float O2CO2Rate) {
         if (O2CO2Rate > 0.7)
         {
-            return CO2Produce * bugDebuffPersent * 1.3f;
+            return CO2Produce * bugDebuffPersent * 1.5f;
         }
         else if (O2CO2Rate < 0.3)
         {
-            return CO2Produce * bugDebuffPersent * 0.7f;
+            return CO2Produce * bugDebuffPersent * 0.5f;
         }
         else
         {

@@ -49,7 +49,7 @@ public class BugController : MonoBehaviour {
             //Debug.Log(points.Count);
             if (points.Count != 0) {
                 Bug bug = new Bug();
-                Debug.Log(points[randomNum].ToString());
+                //Debug.Log(points[randomNum].ToString());
                 if (bug.Infect(points[randomNum])) {
                     bugList.Add(bug);
                 }
@@ -74,7 +74,6 @@ public class BugController : MonoBehaviour {
 
 
     public void KillBug(MyPoint _point) {
-
         foreach (GameObject i in gameController.GetComponent<GameController>().plantList) {
             Plant p = i.GetComponent<Plant>();
             if (p.GetPoint().equal(_point)) {
@@ -83,6 +82,16 @@ public class BugController : MonoBehaviour {
         }
         foreach (Bug b in bugList) {
             if (b.GetPoint().equal(_point)) {
+                bugList.Remove(b);
+            }
+        }
+    }
+
+    public void removeBug(MyPoint _point) {
+        foreach (Bug b in bugList)
+        {
+            if (b.GetPoint().equal(_point))
+            {
                 bugList.Remove(b);
             }
         }

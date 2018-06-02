@@ -8,6 +8,8 @@ public class UIControl : MonoBehaviour {
     public Slider Moon;
     public Slider Sun;
     public Slider Air;
+    public Image SunPower_Fill;
+    public Image MoonPower_Fill;
     //public GameObject SelectArea;
     public GameObject MoveText;
     public static bool In_Round = true; //玩家是否在回合内,行动点耗尽为不在回合内
@@ -44,10 +46,13 @@ public class UIControl : MonoBehaviour {
         GrowConsumeMoon();
         GrowConsumeSun();
         MoveText.GetComponent<Text>().text = GameController.Move.ToString();
-        
+
+
+        SunPower_Fill.transform.localScale = new Vector3(Sun.value / Sun.maxValue, Sun.value / Sun.maxValue, Sun.value / Sun.maxValue);
+        MoonPower_Fill.transform.localScale = new Vector3(Moon.value / Moon.maxValue, Moon.value / Moon.maxValue, Moon.value / Moon.maxValue);
     }
 
-    public void GrowConsumeSun() //种植物日消耗s
+    public void GrowConsumeSun() //种植物日消耗 
     {
         
 
@@ -75,6 +80,8 @@ public class UIControl : MonoBehaviour {
     {
         Air.value = O2;
     }
+
+
     /*
     public void SelectArea_Show() //选择面板显示
     {
