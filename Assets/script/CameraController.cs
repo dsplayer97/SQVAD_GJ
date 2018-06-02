@@ -25,6 +25,11 @@ public class CameraController : MonoBehaviour
     public GameObject UImesh;
     public Text plantName;
 
+    //用来替换的的素材
+    public Material normalfield;
+    public Material seadfield;
+    public Material badfield;
+
     private String[] prefabName = { "Prefabs/sunflower", "Prefabs/mashroom", "Prefabs/Epiphyllum" };//预设路径
     private String[] Plantnamelist = { "sunflower", "mashroom", "Epiphyllum"};
 
@@ -102,7 +107,17 @@ public class CameraController : MonoBehaviour
                     {
                         GameController.Move -= 1; //本回合行动点减1
                                                   //执行土地蒙层撤销动画
-
+                        if (GardenMap.mapstate[info[0], info[1]] >= 1 && GardenMap.mapstate[info[0], info[1]] <= 3)
+                        {
+                            aimGardenfield.GetComponent<Renderer>().material = normalfield;
+                        }else if(GardenMap.mapstate[info[0], info[1]] == 6)
+                        {
+                            aimGardenfield.GetComponent<Renderer>().material = seadfield;
+                        }
+                        else
+                        {
+                            aimGardenfield.GetComponent<Renderer>().material = badfield;
+                        }
                         //将土地状态变为1（已探索）
                         GardenMap.skinMap[info[0], info[1]] = 1;
                         Debug.Log("探索中");

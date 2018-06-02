@@ -6628,6 +6628,9 @@ MonoBehaviour:
   Repairbutton: {fileID: 102513967}
   UImesh: {fileID: 1765818069}
   plantName: {fileID: 2018197505}
+  normalfield: {fileID: 2100000, guid: 4e5ab6bfdaa28b741ad7f857f17e884a, type: 3}
+  seadfield: {fileID: 2100000, guid: 7a56b149807fc0d41b0e4a1444b09f1d, type: 3}
+  badfield: {fileID: 2100000, guid: 5e30ffbbabed254468fdc2780c42ca33, type: 3}
 --- !u!114 &1720699401
 MonoBehaviour:
   m_ObjectHideFlags: 0
