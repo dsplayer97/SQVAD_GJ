@@ -31,4 +31,8 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+<<<<<<< HEAD
 Library/shadercompiler-UnityShaderCompiler.exe0.log
+=======
+Library/metadata/00/00000000000000009000000000000000
+>>>>>>> 9ab22bd81538d8fd248457e718835515a8a71beb

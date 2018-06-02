@@ -70,6 +70,21 @@ public class GameController : MonoBehaviour
             {
                 if (p.HpDown())
                 {
+                    switch(GardenMap.mapstate[p.GetPoint().GetX(), p.GetPoint().GetY()])
+                    {
+                        case 7:
+                            GardenMap.mapstate[p.GetPoint().GetX(), p.GetPoint().GetY()] = 1;
+                            break;
+                        case 8:
+                            GardenMap.mapstate[p.GetPoint().GetX(), p.GetPoint().GetY()] = 2;
+                            break;
+                        case 9:
+                            GardenMap.mapstate[p.GetPoint().GetX(), p.GetPoint().GetY()] = 3;
+                            break;
+                        default:
+                            GardenMap.mapstate[p.GetPoint().GetX(), p.GetPoint().GetY()] = 6;
+                            break;
+                    }
                     Destroy(i);
 
                 }
