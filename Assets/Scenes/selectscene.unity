@@ -206,6 +206,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e945f3866e9c484f92fd3ef11ddd0ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelcube1: {fileID: 1543967374}
+  levelcube2: {fileID: 984955225}
+  levelcube3: {fileID: 323844746}
 --- !u!1 &323844746 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 100000, guid: 5e30ffbbabed254468fdc2780c42ca33, type: 3}

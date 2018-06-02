@@ -17,30 +17,10 @@ public class selfRotate : MonoBehaviour {
         this.gameObject.transform.Rotate(0, 25 * Time.deltaTime, 0, Space.Self);
 
         
-        if (doscale)
-        {
-            Debug.Log("true了");
-            this.gameObject.transform.DOScale(8f, 2);
-        }
-        else
-        {
-            this.gameObject.transform.DOScale(5f, 2);
-        }
+      
 
     }
-
-    public void OnCollisionEnter(Collision collision)
-    {
-        //Debug.Log("放大");
-        //this.gameObject.transform.DOScale(8f, 2);
-        doscale = true;
-    }
-    public  void OnCollisionExit(Collision collision)
-    {
-        //Debug.Log("缩小");
-        //this.gameObject.transform.DOScale(5f, 2);
-        doscale = false;
-    }
+    
 
 
 
