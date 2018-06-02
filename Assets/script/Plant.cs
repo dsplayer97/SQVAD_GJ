@@ -36,7 +36,9 @@ public class Plant : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        //使植物始终面向摄像机
+        this.transform.LookAt(Camera.main.transform.position);
+        this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(Camera.main.transform.position - this.transform.position), 0);
     }
     
     public void ChangeLive() {

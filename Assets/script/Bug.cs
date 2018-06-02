@@ -6,15 +6,15 @@ public class Bug : MonoBehaviour {
 
     private MyPoint point; public void SetPoint(MyPoint _p) { point = _p; } public MyPoint GetPoint() { return point; }
     private GameObject gameController;
-    private GameObject targetMap;
+    //private GameObject targetMap;
     private int[,] skinMap;
     private int[,] mapState;
     public int spreadCD;//扩散感染的cd时间
 
     // Use this for initialization
     void Start() {
-        gameController = GameObject.Find("GameController");
-        targetMap = GameObject.Find("GardenMap");
+        gameController = GameObject.Find("Main Camera");
+        //targetMap = GameObject.Find("GardenMap");
     }
 
     // Update is called once per frame

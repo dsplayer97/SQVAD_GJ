@@ -5772,6 +5772,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1596758329}
+  - component: {fileID: 1596758330}
   m_Layer: 0
   m_Name: basicpanel
   m_TagString: Untagged
@@ -5843,6 +5844,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1596758330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1596758328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ca19eefdddb7ac4083afc964f442985, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1626582326
 GameObject:
   m_ObjectHideFlags: 0
@@ -6273,6 +6285,7 @@ MonoBehaviour:
   O2: 50
   CO2: 50
   round: 0
+  targetMap: {fileID: 0}
 --- !u!114 &1720699400
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6289,6 +6302,10 @@ MonoBehaviour:
   maxh: 10
   spotlight: {fileID: 1774970972}
   SelectArea: {fileID: 1939110079}
+  plantbutton: {fileID: 534352028}
+  Repairbutton: {fileID: 102513967}
+  UImesh: {fileID: 1765818069}
+  plantName: {fileID: 2018197505}
 --- !u!114 &1720699401
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6303,7 +6320,6 @@ MonoBehaviour:
   Moon: {fileID: 1759841176}
   Sun: {fileID: 1062473752}
   Air: {fileID: 1504156141}
-  SelectArea: {fileID: 1939110079}
   MoveText: {fileID: 1246365827}
 --- !u!1 &1722387578
 GameObject:
@@ -6628,7 +6644,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1765818070
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6748,7 +6764,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!108 &1774970973
 Light:
   m_ObjectHideFlags: 0
@@ -6758,7 +6774,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 8
   m_Type: 0
-  m_Color: {r: 0.8870362, g: 0.9632353, b: 0.41079152, a: 1}
+  m_Color: {r: 0.92834985, g: 0.97794116, b: 0.618404, a: 1}
   m_Intensity: 30
   m_Range: 20
   m_SpotAngle: 30
@@ -7540,6 +7556,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1939110080}
+  - component: {fileID: 1939110081}
   m_Layer: 5
   m_Name: SelectArea
   m_TagString: Untagged
@@ -7565,9 +7582,26 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -157.95218, y: 102.3728}
+  m_AnchoredPosition: {x: 326, y: 102.3728}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: -0.2855222, y: -0.15027192}
+--- !u!95 &1939110081
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1939110079}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 019a9cca30086cf4faa2094da178c88c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &1960170461
 GameObject:
   m_ObjectHideFlags: 0
@@ -7949,7 +7983,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2019936480
 RectTransform:
   m_ObjectHideFlags: 0
