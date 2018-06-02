@@ -14,7 +14,7 @@ public class BugController : MonoBehaviour {
     private int round;
 
     void Awake() {
-        //gameController = GameObject.Find("GameController");
+        gameController = GameObject.Find("Main Camera");
         bugList = new List<Bug>();
     }
 

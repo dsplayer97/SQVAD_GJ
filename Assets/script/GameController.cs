@@ -9,6 +9,7 @@ public class GameController : MonoBehaviour
     public  float moonPower;
     public float O2;
     public float CO2;
+    private float alpha = 0;
 
     public int round;
 
@@ -26,7 +27,7 @@ public class GameController : MonoBehaviour
     public static int Move; //行动
 
     void Awake() {
-        //bugController = GameObject.Find("BugController");
+        bugController = GameObject.Find("Main Camera");
     }
 
     // Use this for initialization
@@ -63,7 +64,13 @@ public class GameController : MonoBehaviour
             {
                 if (p.HpDown())
                 {
-                    Destroy(i);
+                    alpha = alpha + 0.005f;
+                    i.GetComponent<Material>().color = new Color(i.GetComponent<Material>().color.r, i.GetComponent<Material>().color.g, i.GetComponent<Material>().color.b, alpha);
+                    if (alpha == 255)
+                    {
+                        Destroy(i);
+                        GardenMap.mapstate[p.GetPoint().GetX(), p.GetPoint().GetY()] = 6;
+                    }
                 }
             }
             if (p.live)
@@ -146,7 +153,7 @@ public class GameController : MonoBehaviour
     public void StartInfect() {
         if (round == 5)
         {
-            bugController.GetComponent<BugController>().Infect();
+           bugController.GetComponent<BugController>().Infect();
         }
 
         bugController.GetComponent<BugController>().SpreadInfect();

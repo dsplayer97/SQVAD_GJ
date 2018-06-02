@@ -13,14 +13,18 @@ public class CameraController : MonoBehaviour {
     public static GameObject aimGardenfield;
     private bool spotcanmove = true;
     static bool SelectAreaIsShowed = false;  //选择面板是否出现    
+    static bool Info_RemoveIsShowed = false;  //信息删除面板是否出现
     public GameObject SelectArea;   //选择面板
+    public GameObject Info_RemovePanel;  //信息和删除按钮
+    public GameObject Info_Text;  //信息文字
+    public GameObject PlantInfo_Text;  //种花消费信息文字
     public GameObject plantbutton;  //种植按钮
-   // public GameObject Noplantbutton;  //不种按钮
+                                    // public GameObject Noplantbutton;  //不种按钮
     public GameObject Repairbutton;  //修复按钮
     public GameObject UImesh;
     public Text plantName;
-	private String[] prefabName = { "Prefabs/sunflower", "", "", "", "" };//预设路径
-    private String[] Plantnamelist = { "sunflower", "", "", "", "" };
+	private String[] prefabName = { "Prefabs/sunflower", "Prefabs/mashroom", "Prefabs/Epiphyllum"};//预设路径
+    private String[] Plantnamelist = { "sunflower", "mashroom", "epiphyllum"};
 
     void Start () {
 
@@ -241,7 +245,7 @@ public void loadprefab()
 
             prefabGameobject.transform.parent = parentObject.transform;
             //prefabGameobject.transform.localScale = Vector2.one;
-            prefabGameobject.transform.localScale = new Vector3(80, 80, 80);
+            prefabGameobject.transform.localScale = new Vector3(100, 100, 100);
             prefabGameobject.transform.localPosition = Vector3.zero;
         }
 
