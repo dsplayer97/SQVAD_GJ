@@ -24,8 +24,10 @@ public class CameraController : MonoBehaviour
     public GameObject Repairbutton;  //修复按钮
     public GameObject UImesh;
     public Text plantName;
+
     private String[] prefabName = { "Prefabs/sunflower", "Prefabs/mashroom", "Prefabs/Epiphyllum" };//预设路径
     private String[] Plantnamelist = { "sunflower", "mashroom", "Epiphyllum"};
+
 
     void Start()
     {
@@ -111,7 +113,11 @@ public class CameraController : MonoBehaviour
                     else if (aimSkinmap[info[0], info[1]] == 1 && aimMapstate[info[0], info[1]] != 0)
                     {
                         spotcanmove = false;
+
                         //Debug.Log("info:" + info[0] + " " + info[1]);
+
+                        Debug.Log("info:" + info[0] + " " + info[1]);
+
                         SelectArea_Show(info);
                     }
 
@@ -236,6 +242,12 @@ public class CameraController : MonoBehaviour
     }
 
 
+
+    
+
+
+
+
     public void PlantClicked() //种植物操作
     {
         if (GameController.Move >= 1)
@@ -332,8 +344,10 @@ public class CameraController : MonoBehaviour
             prefabGameobject.transform.parent = parentObject.transform;
             //prefabGameobject.transform.localScale = Vector2.one;
             //prefabGameobject.transform.localScale = new Vector3(80, 80, 80);
+
             prefabGameobject.transform.localScale = new Vector3(0.5f,0.5f,0.5f);
             prefabGameobject.transform.localPosition = new Vector3(Vector3.zero.x, Vector3.zero.y+0.05f, Vector3.zero.z);
+
         }
 
     }

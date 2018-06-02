@@ -17,7 +17,6 @@ public class GameController : MonoBehaviour
 
     public GameObject[] plantList;
 
-
     public GameObject targetMap;
     public GameObject bugController;
     private GardenMap gardenMap; public GardenMap GetGardenMap() { return gardenMap; }
