@@ -16,7 +16,6 @@ public class GameController : MonoBehaviour
 
     public GameObject[] plantList;
 
-
     public GameObject targetMap;
     public GameObject bugController;
     private GardenMap gardenMap; public GardenMap GetGardenMap() { return gardenMap; }
@@ -109,7 +108,7 @@ public class GameController : MonoBehaviour
 
     //根据太阳月亮与植物的距离计算植物的产物的增益
     //数组角标0,1,2,3分别影响太阳月亮氧气二氧化碳产量
-    float[] SunMoonEffect(GameObject sun, GameObject moon, GameObject plant) {
+    public float[] SunMoonEffect(GameObject sun, GameObject moon, GameObject plant) {
         float[] buff = { 1, 1, 1, 1 };
         float sunDistance = Mathf.Sqrt(Mathf.Pow((sun.transform.position.x - plant.transform.position.x), 2) +
             Mathf.Pow((sun.transform.position.y - plant.transform.position.y), 2) +

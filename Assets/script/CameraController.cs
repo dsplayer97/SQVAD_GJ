@@ -13,15 +13,19 @@ public class CameraController : MonoBehaviour
     public GameObject spotlight;
     public static GameObject aimGardenfield;
     private bool spotcanmove = true;
-    static bool SelectAreaIsShowed = false;  //选择面板是否出现    
+    static bool SelectAreaIsShowed = false;  //选择面板是否出现 
+    static bool Info_RemoveIsShowed = false;  //信息删除面板是否出现
     public GameObject SelectArea;   //选择面板
+    public GameObject Info_RemovePanel;  //信息和删除按钮
+    public GameObject Info_Text;  //信息文字
+    public GameObject PlantInfo_Text;  //种花消费信息文字
     public GameObject plantbutton;  //种植按钮
-    public GameObject Noplantbutton;  //不种按钮
+                                    // public GameObject Noplantbutton;  //不种按钮
     public GameObject Repairbutton;  //修复按钮
     public GameObject UImesh;
     public Text plantName;
-    private String[] prefabName = { "Prefabs/sunflower", "", "", "", "" };//预设路径
-    private String[] Plantnamelist = { "sunflower", "", "", "", "" };
+    private String[] prefabName = { "Prefabs/sunflower", "Prefabs/flower2", "Prefabs/flower3", "Prefabs/flower4", "Prefabs/flower5" };//预设路径
+    private String[] Plantnamelist = { "sunflower", "flower2", "flower3", "flower4", "flower5" };
 
     void Start()
     {
@@ -41,7 +45,7 @@ public class CameraController : MonoBehaviour
             SelectArea_Hide();
         }
 
-        else if (SelectAreaIsShowed == false) //选择面板弹出时取消射线
+        else if (SelectAreaIsShowed == false && Info_RemoveIsShowed == false) //选择面板弹出时取消射线
         {
             raydetect();
         }
@@ -74,7 +78,7 @@ public class CameraController : MonoBehaviour
             }
             int[] info = gameObject.GetComponent<touchtest>().testintarray;
 
-            if (Input.GetMouseButtonDown(0) && GameController.Move > 0)
+            if (Input.GetMouseButtonDown(0))
             {
                 aimGardenfield = gameObject;
                 int[,] aimSkinmap = GardenMap.skinMap;
@@ -82,11 +86,17 @@ public class CameraController : MonoBehaviour
                 Debug.Log(aimMapstate[info[0], info[1]]);
                 if (aimMapstate[info[0], info[1]] >= 7 && aimMapstate[info[0], info[1]] <= 11)
                 {
-                    //已有花则不产生操作
+                    //已有花操作
+                    spotcanmove = false;
+                    Info_RemovePanel_Show(info);
+                    Info_RemovePanel_Pos();
+                    //Debug.Log(aimGardenfield.name);
+
+
                 }
                 else
                 {
-                    if (aimSkinmap[info[0], info[1]] == 0) //点击未探索土地
+                    if (aimSkinmap[info[0], info[1]] == 0 && GameController.Move > 0) //点击未探索土地
                     {
                         GameController.Move -= 1; //本回合行动点减1
                                                   //执行土地蒙层撤销动画
@@ -94,10 +104,17 @@ public class CameraController : MonoBehaviour
                         //将土地状态变为1（已探索）
                         GardenMap.skinMap[info[0], info[1]] = 1;
                         Debug.Log("探索中");
+                        //spotcanmove = false;
+                        Debug.Log("info:" + info[0] + " " + info[1]);
+                        //SelectArea_Show(info);
                     }
-                    spotcanmove = false;
-                    Debug.Log("info:" + info[0] + " " + info[1]);
-                    SelectArea_Show(info);
+                    else if (aimSkinmap[info[0], info[1]] == 1 && aimMapstate[info[0], info[1]] != 0)
+                    {
+                        spotcanmove = false;
+                        Debug.Log("info:" + info[0] + " " + info[1]);
+                        SelectArea_Show(info);
+                    }
+
                     /*SelectArea.SetActive(true);
                     Debug.Log(GardenMap.mapstate[info[0], info[1]]);
                     if (GardenMap.mapstate[info[0], info[1]] >= 1 && GardenMap.mapstate[info[0], info[1]] <= 5)
@@ -149,14 +166,20 @@ public class CameraController : MonoBehaviour
             Repairbutton.SetActive(false);
             plantName.text = Plantnamelist[GardenMap.mapstate[position[0], position[1]] - 1];
             plantbutton.SetActive(true);
-            Noplantbutton.SetActive(true);
+            PlantInfo_Text.SetActive(true);
+            //植物消耗量显示
+            //PlantInfo_Text.GetComponent<Text>().text = "太阳消耗：" + aimGardenfield.transform.GetChild(0).gameObject.GetComponent<Plant>().sunCost
+            //                                          + "月亮消耗：" + aimGardenfield.transform.GetChild(0).gameObject.GetComponent<Plant>().moonCost
+            //                                          + "结算回合：" + aimGardenfield.transform.GetChild(0).gameObject.GetComponent<Plant>().produceCD;
+
         }
         else if (GardenMap.mapstate[position[0], position[1]] == 6)
         {
             Repairbutton.SetActive(true);
             plantbutton.SetActive(false);
-            Noplantbutton.SetActive(false);
+            //Noplantbutton.SetActive(false);
         }
+
 
         UImesh.SetActive(true);
         SelectAreaIsShowed = true;
@@ -171,12 +194,75 @@ public class CameraController : MonoBehaviour
 
         Debug.Log("hide 执行");
     }
+
+    public void Info_RemovePanel_Pos()  //信息和删除界面位置设置
+    {
+        Info_RemovePanel.transform.position = Input.mousePosition;
+    }
+
+    public void Info_RemovePanel_Show(int[] info)  //信息和删除界面显示
+    {
+        Info_RemovePanel.SetActive(true);
+
+
+        Debug.Log("sunProduce" + aimGardenfield.transform.GetChild(0).gameObject.GetComponent<Plant>().sunProduce);
+        GameObject sun = GameObject.Find("Sun"); GameObject moon = GameObject.Find("Moon");
+        GameObject plant = aimGardenfield.transform.GetChild(0).gameObject;
+        float O2CO2Rate = GameObject.Find("Main Camera").GetComponent<GameController>().O2 / (GameObject.Find("Main Camera").GetComponent<GameController>().CO2 + GameObject.Find("Main Camera").GetComponent<GameController>().O2);
+        float[] sunMoonBuff = GameObject.Find("Main Camera").GetComponent<GameController>().SunMoonEffect(sun, moon, plant);
+        //显示植物信息，待补充
+        Info_Text.GetComponent<Text>().text = "太阳产出： " + plant.GetComponent<Plant>().GetSunProduce(O2CO2Rate) * sunMoonBuff[0]
+                                            + "\n月亮产出： " + plant.GetComponent<Plant>().GetMoonProduce(O2CO2Rate) * sunMoonBuff[1]
+                                            + "\n清算回合：" + plant.GetComponent<Plant>().produceCD
+                                            + "\n二氧化碳产出：" + plant.GetComponent<Plant>().GetCO2Produce(O2CO2Rate) * sunMoonBuff[3]
+                                            + "\n二氧化碳消耗：" + plant.GetComponent<Plant>().CO2Cost
+                                            + "\n氧气产出：" + plant.GetComponent<Plant>().GetO2Produce(O2CO2Rate) * sunMoonBuff[2]
+                                            + "\n氧气消耗：" + plant.GetComponent<Plant>().O2Cost;
+
+
+        UImesh.SetActive(true);
+        Info_RemoveIsShowed = true;
+
+
+
+    }
+
+    public void Info_RemovePanel_Hide()  //信息和删除界面隐藏
+    {
+        spotcanmove = true;
+        Info_RemovePanel.SetActive(false);
+        Info_RemoveIsShowed = false;
+        UImesh.SetActive(false);
+    }
+
+
     public void PlantClicked() //种植物操作
     {
-        GameController.Move -= 1;
-        loadprefab();
+        if (GameController.Move >= 1)
+        {
+            GameController.Move -= 1;
+            loadprefab();
+        }
         Debug.Log("种");
         SelectArea_Hide();
+
+    }
+
+    public void RemoveClicked()  //删除植物
+    {
+        if (GameController.Move >= 1)
+        {
+            GameController.Move -= 1;
+
+            int[] info = aimGardenfield.GetComponent<touchtest>().testintarray;
+            int[,] Remove_aimMapstate = GardenMap.mapstate;
+            Remove_aimMapstate[info[0], info[1]] = 6;
+
+            Destroy(aimGardenfield.transform.GetChild(0).gameObject);
+
+        }
+        Debug.Log("删");
+        Info_RemovePanel_Hide();
     }
 
     public void NoPlantClicked() //不种
@@ -188,9 +274,18 @@ public class CameraController : MonoBehaviour
 
     public void RepairClicked() //耕地
     {
-        GameController.Move -= 1;
-        Debug.Log("耕地");
-        SelectArea_Hide();
+        if (GameController.Move >= 1)
+        {
+            GameController.Move -= 1;
+
+            int[] info = aimGardenfield.GetComponent<touchtest>().testintarray;
+            int[,] Remove_aimMapstate = GardenMap.mapstate;
+            Remove_aimMapstate[info[0], info[1]] = 0;
+            Debug.Log("耕地");
+
+            SelectArea_Hide();
+        }
+
     }
 
     public void loadprefab()
@@ -236,7 +331,7 @@ public class CameraController : MonoBehaviour
 
             prefabGameobject.transform.parent = parentObject.transform;
             //prefabGameobject.transform.localScale = Vector2.one;
-            prefabGameobject.transform.localScale = new Vector3(80, 80, 80);
+            //prefabGameobject.transform.localScale = new Vector3(80, 80, 80);
             prefabGameobject.transform.localPosition = Vector3.zero;
         }
 

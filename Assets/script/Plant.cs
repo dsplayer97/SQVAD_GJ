@@ -98,19 +98,48 @@ public class Plant : MonoBehaviour
 
     //根据氧气二氧化碳比例和是否被害虫感染返回氧气产出
     public float GetO2Produce(float O2CO2Rate) {
-        return O2Produce * bugDebuffPersent;
+        if (O2CO2Rate > 0.7)
+        {
+            return O2Produce * bugDebuffPersent * 0.7f;
+        }
+        else if (O2CO2Rate < 0.3)
+        {
+            return O2Produce * bugDebuffPersent * 1.3f;
+        }
+        else
+        {
+            return O2Produce * bugDebuffPersent;
+        }
     }
 
     public float GetCO2Produce(float O2CO2Rate) {
-        return CO2Produce * bugDebuffPersent;
+        if (O2CO2Rate > 0.7)
+        {
+            return CO2Produce * bugDebuffPersent * 1.3f;
+        }
+        else if (O2CO2Rate < 0.3)
+        {
+            return CO2Produce * bugDebuffPersent * 0.7f;
+        }
+        else
+        {
+            return CO2Produce * bugDebuffPersent;
+        }
     }
 
     public float GetSunProduce(float O2CO2Rate) {
+        if (O2CO2Rate < 0.3) {
+            return sunProduce * bugDebuffPersent * 0.5f;
+        }
         return sunProduce * bugDebuffPersent;
     }
 
 
     public float GetMoonProduce(float O2CO2Rate) {
+        if (O2CO2Rate > 0.7)
+        {
+            return moonProduce * bugDebuffPersent * 0.5f;
+        }
         return moonProduce * bugDebuffPersent;
     }
 
