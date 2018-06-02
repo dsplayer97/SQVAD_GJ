@@ -8210,8 +8210,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fa94a5546d56804ba3d417889e534cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sunPower: 500
-  moonPower: 500
+  sunPower: 800
+  moonPower: 800
   O2: 500
   CO2: 500
   round: 0
