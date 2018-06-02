@@ -478,14 +478,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameController: {fileID: 0}
   name: sunflower
-  sunCost: 12
-  moonCost: 23
-  sunProduce: 20
-  moonProduce: 10
-  CO2Produce: 20.2
-  O2Produce: 60.7
-  CO2Cost: 62.2
-  O2Cost: 10.25
+  sunCost: 200
+  moonCost: 100
+  sunProduce: 50
+  moonProduce: 20
+  CO2Produce: 20
+  O2Produce: 80
+  CO2Cost: 80
+  O2Cost: 20
   produceCD: 2
   buffO2Persent: 1
   buffCO2Persent: 1

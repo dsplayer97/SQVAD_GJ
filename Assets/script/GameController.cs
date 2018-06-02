@@ -194,7 +194,7 @@ public class GameController : MonoBehaviour
     }
 
     public void StartInfect() {
-        if (round == 5)
+        if (round % 5 == 0)
         {
            bugController.GetComponent<BugController>().Infect();
         }
@@ -203,8 +203,9 @@ public class GameController : MonoBehaviour
 
 
     public void SunBurst() {
-        sunPower = sunPower - 20;
-        O2 = O2 + 40;
+        sunPower = sunPower - 300;
+        O2 = 500;
+        CO2 = 500;
         float O2CO2TotalRate = O2 / (O2 + CO2);
         GameObject.Find("Main Camera").GetComponent<UIControl>().ChangeSunMoon(sunPower, moonPower);
         GameObject.Find("Main Camera").GetComponent<UIControl>().ChangeAir(O2CO2TotalRate);
