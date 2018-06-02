@@ -8,7 +8,7 @@ public class UIControl : MonoBehaviour {
     public Slider Moon;
     public Slider Sun;
     public Slider Air;
-    public GameObject SelectArea;
+    //public GameObject SelectArea;
     public GameObject MoveText;
     public static bool In_Round = true; //玩家是否在回合内,行动点耗尽为不在回合内
     //bool SelectAreaIsShowed = false; //选择区域是否显示

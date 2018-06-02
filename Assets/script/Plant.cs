@@ -6,7 +6,7 @@ public class Plant : MonoBehaviour
 {
 
     public GameObject gameController;
-
+    private Animator animator;
     public string name;
     public int sunCost;
     public int moonCost;
@@ -25,31 +25,51 @@ public class Plant : MonoBehaviour
     public bool live;//表示植物是否处于激活状态
     public bool infected;//表示植物是否处于被感染状态, true表示感染, false表示健康
 
-    private MyPoint point; public MyPoint GetPoint() { return point; } public void SetPoint(MyPoint _point) { point = _point; } //表示植物的坐标 
+    private MyPoint point; public MyPoint GetPoint() { return point; }
+    public void SetPoint(MyPoint _point) { point = _point; } //表示植物的坐标 
+
 
     void Awake() {
+
 
     }
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         //gameController = GameObject.Find("GameController");
+        animator = this.gameObject.GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        this.transform.LookAt(new Vector3(Camera.main.transform.position.x,0, Camera.main.transform.position.z));
+        this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(Camera.main.transform.position - this.transform.position), 0);
 
+        if (infected)
+        {
+            animator.SetBool("ill", true);
+
+        }
+        else
+        {
+            animator.SetBool("ill", false);
+        }
+        
     }
+
     
     public void ChangeLive() {
+
         live = !live;
     }
 
 
 
     //植物开始生长, 初始化
-    public void Grow(int x, int y) {
+    public void Grow(int x, int y)
+    {
         point = new MyPoint(x, y);
         live = true;
         infected = false;
@@ -58,28 +78,37 @@ public class Plant : MonoBehaviour
     }
 
     //被害虫感染
-    public void Infect() {
+    public void Infect()
+    {
         infected = true;
         bugDebuffPersent = 0.5f;
         Debug.Log("我被感染拉!" + this.point.ToString());
     }
 
     //植物恢复健康
+
     public void Cure() {
+
         hp = 5;
         infected = false;
         bugDebuffPersent = 1;
     }
 
     //hp减1, 减到0就死亡
+
     public bool HpDown() {
+
         hp = hp - 1;
         if (hp == 0)
         {
             live = false;
+
+            animator.SetBool("die", true);
             return true;
         }
+
         else {
+
             return false;
         }
     }
@@ -92,11 +121,15 @@ public class Plant : MonoBehaviour
     }
 
     //建造植物时消耗月亮
-    public void CostMoon() {
+    public void CostMoon()
+    {
         GameObject.Find("Main Camera").SendMessageUpwards("GrowConsumeMoon", moonCost);
     }
 
     //根据氧气二氧化碳比例和是否被害虫感染返回氧气产出
+
+
+
     public float GetO2Produce(float O2CO2Rate) {
         if (O2CO2Rate > 0.7)
         {
@@ -128,11 +161,17 @@ public class Plant : MonoBehaviour
     }
 
     public float GetSunProduce(float O2CO2Rate) {
+        animator.SetBool("produce", true);
+        animator.SetBool("Produce", false);
         if (O2CO2Rate < 0.3) {
+
             return sunProduce * bugDebuffPersent * 0.5f;
         }
+
         return sunProduce * bugDebuffPersent;
+
     }
+
 
 
     public float GetMoonProduce(float O2CO2Rate) {
@@ -140,6 +179,7 @@ public class Plant : MonoBehaviour
         {
             return moonProduce * bugDebuffPersent * 0.5f;
         }
+
         return moonProduce * bugDebuffPersent;
     }
 

@@ -24,8 +24,10 @@ public class CameraController : MonoBehaviour
     public GameObject Repairbutton;  //修复按钮
     public GameObject UImesh;
     public Text plantName;
-    private String[] prefabName = { "Prefabs/sunflower", "Prefabs/flower2", "Prefabs/flower3", "Prefabs/flower4", "Prefabs/flower5" };//预设路径
-    private String[] Plantnamelist = { "sunflower", "flower2", "flower3", "flower4", "flower5" };
+
+    private String[] prefabName = { "Prefabs/sunflower", "Prefabs/mashroom", "Prefabs/Epiphyllum" };//预设路径
+    private String[] Plantnamelist = { "sunflower", "mashroom", "Epiphyllum"};
+
 
     void Start()
     {
@@ -83,7 +85,7 @@ public class CameraController : MonoBehaviour
                 aimGardenfield = gameObject;
                 int[,] aimSkinmap = GardenMap.skinMap;
                 int[,] aimMapstate = GardenMap.mapstate;
-                Debug.Log(aimMapstate[info[0], info[1]]);
+               // Debug.Log(aimMapstate[info[0], info[1]]);
                 if (aimMapstate[info[0], info[1]] >= 7 && aimMapstate[info[0], info[1]] <= 11)
                 {
                     //已有花操作
@@ -111,7 +113,11 @@ public class CameraController : MonoBehaviour
                     else if (aimSkinmap[info[0], info[1]] == 1 && aimMapstate[info[0], info[1]] != 0)
                     {
                         spotcanmove = false;
+
+                        //Debug.Log("info:" + info[0] + " " + info[1]);
+
                         Debug.Log("info:" + info[0] + " " + info[1]);
+
                         SelectArea_Show(info);
                     }
 
@@ -135,7 +141,7 @@ public class CameraController : MonoBehaviour
 
                     SelectAreaIsShowed = true;*/
                     SelectArea_Pos();
-                    Debug.Log("已探索");
+                   // Debug.Log("已探索");
                 }
             }
             //Debug.Log(info[0] + "  " + info[1]);
@@ -192,7 +198,7 @@ public class CameraController : MonoBehaviour
         SelectAreaIsShowed = false;
         UImesh.SetActive(false);
 
-        Debug.Log("hide 执行");
+        //Debug.Log("hide 执行");
     }
 
     public void Info_RemovePanel_Pos()  //信息和删除界面位置设置
@@ -234,6 +240,12 @@ public class CameraController : MonoBehaviour
         Info_RemoveIsShowed = false;
         UImesh.SetActive(false);
     }
+
+
+
+    
+
+
 
 
     public void PlantClicked() //种植物操作
@@ -332,7 +344,10 @@ public class CameraController : MonoBehaviour
             prefabGameobject.transform.parent = parentObject.transform;
             //prefabGameobject.transform.localScale = Vector2.one;
             //prefabGameobject.transform.localScale = new Vector3(80, 80, 80);
-            prefabGameobject.transform.localPosition = Vector3.zero;
+
+            prefabGameobject.transform.localScale = new Vector3(0.5f,0.5f,0.5f);
+            prefabGameobject.transform.localPosition = new Vector3(Vector3.zero.x, Vector3.zero.y+0.05f, Vector3.zero.z);
+
         }
 
     }

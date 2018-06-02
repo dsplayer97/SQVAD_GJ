@@ -12,7 +12,7 @@ public class GardenMap : MonoBehaviour
     public static int[,] skinMap = new int[7, 7];
     
 
-    private String[] prefabName = { "", "", "","","" };
+   // private String[] prefabName = { "Prefabs/sunflower", "", "","","" };
 
 
    
@@ -27,7 +27,9 @@ public class GardenMap : MonoBehaviour
         //预设，记得该为调用关卡读取参数
         int[] attribute = new int[6];
         //初始化关卡内容参数
-        initmapAttribute(49,0,0,0,0,0);
+
+        initmapAttribute(10,10,20,0,0,9);
+
         //初始化地图
         initmapstate();
         initskinMap();
@@ -92,7 +94,8 @@ public class GardenMap : MonoBehaviour
             {
                // Debug.Log(randomarray[48]); 
                 mapstate[i, j] = mapAttribute[randomarray[i*7+j]];
-                
+                Debug.Log("mapstate"+mapstate[i,j]);
+
             }
         }
 
