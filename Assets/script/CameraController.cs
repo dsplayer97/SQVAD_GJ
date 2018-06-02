@@ -332,8 +332,8 @@ public class CameraController : MonoBehaviour
             prefabGameobject.transform.parent = parentObject.transform;
             //prefabGameobject.transform.localScale = Vector2.one;
             //prefabGameobject.transform.localScale = new Vector3(80, 80, 80);
-            prefabGameobject.transform.localScale = new Vector3(100, 100, 100);
-            prefabGameobject.transform.localPosition = Vector3.zero;
+            prefabGameobject.transform.localScale = new Vector3(0.5f,0.5f,0.5f);
+            prefabGameobject.transform.localPosition = new Vector3(Vector3.zero.x, Vector3.zero.y+0.05f, Vector3.zero.z);
         }
 
     }

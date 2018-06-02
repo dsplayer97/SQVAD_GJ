@@ -22,7 +22,12 @@ ModelImporter:
     7400000: Take 001
     9500000: //RootNode
     13700000: mg_low
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: mg_cz
+    second: {fileID: 2100000, guid: 50640320c1d21a348b8f41ed63e89ca7, type: 2}
   materials:
     importMaterials: 1
     materialName: 0

@@ -12,7 +12,12 @@ ModelImporter:
     3300000: //RootNode
     4300000: di_chushi
     9500000: //RootNode
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: di_chushi_cz
+    second: {fileID: 2100000, guid: 34829493777a16545b83a72c622c86fd, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
