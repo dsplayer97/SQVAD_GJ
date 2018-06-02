@@ -596,16 +596,16 @@ MonoBehaviour:
   name: epiphyllum
   sunCost: 12
   moonCost: 23
-  sunProduce: 2
-  moonProduce: 3
-  CO2Produce: 64
-  O2Produce: 54
-  CO2Cost: 6
-  O2Cost: 4
+  sunProduce: 5
+  moonProduce: 30
+  CO2Produce: 60.01
+  O2Produce: 20.1
+  CO2Cost: 10
+  O2Cost: 60
   produceCD: 3
-  buffO2Persent: 5
-  buffCO2Persent: 34
-  hp: 0
+  buffO2Persent: 1
+  buffCO2Persent: 1.05
+  hp: 5
   live: 0
   infected: 0
 --- !u!137 &137201639828704864

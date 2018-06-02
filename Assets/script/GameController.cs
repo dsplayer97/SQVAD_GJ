@@ -26,11 +26,8 @@ public class GameController : MonoBehaviour
     public static int Move; //行动
 
     void Awake() {
-
         bugController = GameObject.Find("Main Camera");
-
-        //bugController = GameObject.Find("BugController");
-
+        round = 0;
     }
 
     // Use this for initialization
@@ -60,27 +57,19 @@ public class GameController : MonoBehaviour
         float O2CO2TotalRate = 0;
         O2CO2Rate = O2 / CO2;
         plantList = GetAllPlant();
-        GameObject sun = GameObject.Find("Sun");
-        GameObject moon = GameObject.Find("Moon");
+        GameObject sun = GameObject.Find("sun");
+        GameObject moon = GameObject.Find("moon");
         foreach (GameObject i in plantList)
         {
             Plant p = i.GetComponent<Plant>();
 
             float[] sunMoonBuff = SunMoonEffect(sun, moon, i);
-
+            
+            //被感染的植物要减血, 减到0销毁植物
             if (p.infected)
             {
                 if (p.HpDown())
                 {
-
-                    alpha = alpha + 0.005f;
-                    i.GetComponent<Material>().color = new Color(i.GetComponent<Material>().color.r, i.GetComponent<Material>().color.g, i.GetComponent<Material>().color.b, alpha);
-                    if (alpha == 255)
-                    {
-                        Destroy(i);
-                        GardenMap.mapstate[p.GetPoint().GetX(), p.GetPoint().GetY()] = 6;
-                    }
-
                     Destroy(i);
 
                 }
@@ -97,7 +86,7 @@ public class GameController : MonoBehaviour
                     totalMoonProduce = totalMoonProduce + p.GetMoonProduce(O2CO2Rate) * sunMoonBuff[1];
                 }
             }
-            //被感染的植物要减血, 减到0销毁植物
+            
 
         }
         O2 = O2 - totalO2Consume + totalO2Produce;
@@ -192,11 +181,8 @@ public class GameController : MonoBehaviour
     public void StartInfect() {
         if (round == 5)
         {
-
            bugController.GetComponent<BugController>().Infect();
-
         }
-
         bugController.GetComponent<BugController>().SpreadInfect();
     }
 

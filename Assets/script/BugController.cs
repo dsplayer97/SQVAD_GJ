@@ -14,9 +14,7 @@ public class BugController : MonoBehaviour {
     private int round;
 
     void Awake() {
-
         gameController = GameObject.Find("Main Camera");
-
         bugList = new List<Bug>();
     }
 
@@ -47,14 +45,13 @@ public class BugController : MonoBehaviour {
         round = GetRound();
         if (round >= 5) {
             List<MyPoint> points = FindPlant();
-            //int randomNum = Random.Range(0, points.Count);
+            int randomNum = Random.Range(0, points.Count);
             //Debug.Log(points.Count);
             if (points.Count != 0) {
                 Bug bug = new Bug();
-                Debug.Log(points[0].ToString());
-                if (bug.Infect(points[0])) {
+                Debug.Log(points[randomNum].ToString());
+                if (bug.Infect(points[randomNum])) {
                     bugList.Add(bug);
-
                 }
             }
         }

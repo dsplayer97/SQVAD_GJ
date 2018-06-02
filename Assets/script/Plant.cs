@@ -95,7 +95,6 @@ public class Plant : MonoBehaviour
     }
 
     //hp减1, 减到0就死亡
-
     public bool HpDown() {
 
         hp = hp - 1;
@@ -162,7 +161,7 @@ public class Plant : MonoBehaviour
 
     public float GetSunProduce(float O2CO2Rate) {
         animator.SetBool("produce", true);
-        animator.SetBool("Produce", false);
+        animator.SetBool("produce", false);
         if (O2CO2Rate < 0.3) {
 
             return sunProduce * bugDebuffPersent * 0.5f;

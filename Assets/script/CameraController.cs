@@ -212,7 +212,7 @@ public class CameraController : MonoBehaviour
 
 
         Debug.Log("sunProduce" + aimGardenfield.transform.GetChild(0).gameObject.GetComponent<Plant>().sunProduce);
-        GameObject sun = GameObject.Find("Sun"); GameObject moon = GameObject.Find("Moon");
+        GameObject sun = GameObject.Find("sun"); GameObject moon = GameObject.Find("moon");
         GameObject plant = aimGardenfield.transform.GetChild(0).gameObject;
         float O2CO2Rate = GameObject.Find("Main Camera").GetComponent<GameController>().O2 / (GameObject.Find("Main Camera").GetComponent<GameController>().CO2 + GameObject.Find("Main Camera").GetComponent<GameController>().O2);
         float[] sunMoonBuff = GameObject.Find("Main Camera").GetComponent<GameController>().SunMoonEffect(sun, moon, plant);

@@ -217,17 +217,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameController: {fileID: 0}
   name: 
-  sunCost: 0
-  moonCost: 0
-  sunProduce: 0
-  moonProduce: 0
-  CO2Produce: 0
-  O2Produce: 0
-  CO2Cost: 0
-  O2Cost: 0
-  produceCD: 0
-  buffO2Persent: 0
-  buffCO2Persent: 0
+  sunCost: 5
+  moonCost: 5
+  sunProduce: 20
+  moonProduce: 20
+  CO2Produce: 10.05
+  O2Produce: 12.84
+  CO2Cost: 10.46
+  O2Cost: 11.25
+  produceCD: 1
+  buffO2Persent: 1.02
+  buffCO2Persent: 1
   hp: 0
   live: 0
   infected: 0

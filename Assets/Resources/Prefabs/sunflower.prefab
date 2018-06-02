@@ -480,16 +480,16 @@ MonoBehaviour:
   name: sunflower
   sunCost: 12
   moonCost: 23
-  sunProduce: 12
-  moonProduce: 32
-  CO2Produce: 1
-  O2Produce: 23
-  CO2Cost: 123
-  O2Cost: 12
-  produceCD: 23
-  buffO2Persent: 12
-  buffCO2Persent: 2
-  hp: 0
+  sunProduce: 20
+  moonProduce: 10
+  CO2Produce: 20.2
+  O2Produce: 60.7
+  CO2Cost: 62.2
+  O2Cost: 10.25
+  produceCD: 2
+  buffO2Persent: 1
+  buffCO2Persent: 1
+  hp: 5
   live: 0
   infected: 0
 --- !u!137 &137803576544702278
