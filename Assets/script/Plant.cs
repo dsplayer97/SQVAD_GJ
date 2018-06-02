@@ -28,8 +28,9 @@ public class Plant : MonoBehaviour
     private MyPoint point; public MyPoint GetPoint() { return point; }
     public void SetPoint(MyPoint _point) { point = _point; } //表示植物的坐标 
 
-    void Awake()
-    {
+
+    void Awake() {
+
 
     }
 
@@ -58,8 +59,9 @@ public class Plant : MonoBehaviour
         
     }
 
-    public void ChangeLive()
-    {
+    
+    public void ChangeLive() {
+
         live = !live;
     }
 
@@ -84,25 +86,29 @@ public class Plant : MonoBehaviour
     }
 
     //植物恢复健康
-    public void Cure()
-    {
+
+    public void Cure() {
+
         hp = 5;
         infected = false;
         bugDebuffPersent = 1;
     }
 
     //hp减1, 减到0就死亡
-    public bool HpDown()
-    {
+
+    public bool HpDown() {
+
         hp = hp - 1;
         if (hp == 0)
         {
             live = false;
+
             animator.SetBool("die", true);
             return true;
         }
-        else
-        {
+
+        else {
+
             return false;
         }
     }

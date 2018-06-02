@@ -3116,6 +3116,47 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   testintarray: 0300000003000000
+--- !u!1 &1048775903
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1048775905}
+  - component: {fileID: 1048775904}
+  m_Layer: 0
+  m_Name: BugController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1048775904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1048775903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e88d596729eae6a41b76bce7633b5124, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameController: {fileID: 1720699394}
+--- !u!4 &1048775905
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1048775903}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.589077, y: -5.7918777, z: 1.4652138}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1062473750
 GameObject:
   m_ObjectHideFlags: 0
@@ -5983,9 +6024,14 @@ MonoBehaviour:
   O2: 50
   CO2: 50
   round: 0
+<<<<<<< HEAD:Assets/Scenes/Main_game_scene.unity
   plantList: []
   targetMap: {fileID: 0}
   bugController: {fileID: 0}
+=======
+  targetMap: {fileID: 0}
+  bugController: {fileID: 1048775903}
+>>>>>>> 7ab9eed620816f7c8d7b6ec8415a4a581ae3572e:Assets/Scenes/DS_test.unity
 --- !u!114 &1720699400
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -7170,7 +7170,9 @@ MonoBehaviour:
   O2: 50
   CO2: 50
   round: 0
+  plantList: []
   targetMap: {fileID: 0}
+  bugController: {fileID: 1720699394}
 --- !u!114 &1720699400
 MonoBehaviour:
   m_ObjectHideFlags: 0
