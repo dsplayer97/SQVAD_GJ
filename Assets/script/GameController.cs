@@ -56,9 +56,12 @@ public class GameController : MonoBehaviour
         float O2CO2TotalRate = 0;
         O2CO2Rate = O2 / CO2;
         plantList = GetAllPlant();
+        GameObject sun = GameObject.Find("Sun");
+        GameObject moon = GameObject.Find("Moon");
         foreach (GameObject i in plantList)
         {
             Plant p = i.GetComponent<Plant>();
+            float[] sunMoonBuff = SunMoonEffect(sun, moon, i);
             if (p.infected)
             {
                 if (p.HpDown())
@@ -70,12 +73,12 @@ public class GameController : MonoBehaviour
             {
                 totalO2Consume = totalO2Consume + p.O2Cost;
                 totalCO2Consume = totalCO2Consume + p.CO2Cost;
-                totalO2Produce = totalO2Produce + p.GetO2Produce(O2CO2Rate);
-                totalCO2Produce = totalCO2Produce + p.GetCO2Produce(O2CO2Rate);
+                totalO2Produce = totalO2Produce + p.GetO2Produce(O2CO2Rate) * sunMoonBuff[2];
+                totalCO2Produce = totalCO2Produce + p.GetCO2Produce(O2CO2Rate) * sunMoonBuff[3];
                 if (round % p.produceCD == 0)
                 {
-                    totalSunProduce = totalSunProduce + p.GetSunProduce(O2CO2Rate);
-                    totalMoonProduce = totalMoonProduce + p.GetMoonProduce(O2CO2Rate);
+                    totalSunProduce = totalSunProduce + p.GetSunProduce(O2CO2Rate) * sunMoonBuff[0];
+                    totalMoonProduce = totalMoonProduce + p.GetMoonProduce(O2CO2Rate) * sunMoonBuff[1];
                 }
             }
             //被感染的植物要减血, 减到0销毁植物
@@ -102,6 +105,33 @@ public class GameController : MonoBehaviour
         round += 1;
         Move = 3;
         UIControl.In_Round = true;
+    }
+
+    //根据太阳月亮与植物的距离计算植物的产物的增益
+    //数组角标0,1,2,3分别影响太阳月亮氧气二氧化碳产量
+    float[] SunMoonEffect(GameObject sun, GameObject moon, GameObject plant) {
+        float[] buff = { 1, 1, 1, 1 };
+        float sunDistance = Mathf.Sqrt(Mathf.Pow((sun.transform.position.x - plant.transform.position.x), 2) +
+            Mathf.Pow((sun.transform.position.y - plant.transform.position.y), 2) +
+            Mathf.Pow((sun.transform.position.z - plant.transform.position.z), 2));
+        float moonDistance = Mathf.Sqrt(Mathf.Pow((moon.transform.position.x - plant.transform.position.x), 2) +
+            Mathf.Pow((moon.transform.position.y - plant.transform.position.y), 2) +
+            Mathf.Pow((moon.transform.position.z - plant.transform.position.z), 2));
+        if (sunDistance < moonDistance){
+            //Debug.Log("sun:" + sunDistance.ToString());
+            buff[0] = Mathf.Sqrt((100 - sunDistance) / 100 + 1);
+            buff[1] = Mathf.Sqrt(sunDistance / 100);
+            buff[2] = Mathf.Sqrt((100 - sunDistance) / 100 + 1);
+            buff[3] = Mathf.Sqrt(sunDistance / 100);
+        }
+        else if (moonDistance < sunDistance) {
+            //Debug.Log("moon:" + moonDistance.ToString());
+            buff[0] = Mathf.Sqrt(moonDistance / 100);
+            buff[1] = Mathf.Sqrt((100 - moonDistance) / 100 + 1);
+            buff[2] = Mathf.Sqrt(moonDistance / 100);
+            buff[3] = Mathf.Sqrt((100 - moonDistance) / 100 + 1);            
+        }
+        return buff;
     }
 
     //建造植物时消耗太阳能量
@@ -150,5 +180,17 @@ public class GameController : MonoBehaviour
         }
 
         bugController.GetComponent<BugController>().SpreadInfect();
+    }
+
+    public void SunBurst() {
+        sunPower = sunPower - 20;
+        O2 = O2 + 40;
+        float O2CO2TotalRate = O2 / (O2 + CO2);
+        GameObject.Find("Main Camera").GetComponent<UIControl>().ChangeSunMoon(sunPower, moonPower);
+        GameObject.Find("Main Camera").GetComponent<UIControl>().ChangeAir(O2CO2TotalRate);
+    }
+
+    public void MoonSword(MyPoint point) {
+        bugController.GetComponent<BugController>().KillBug(point);
     }
 }

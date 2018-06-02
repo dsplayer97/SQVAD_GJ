@@ -72,7 +72,7 @@ public class BugController : MonoBehaviour {
     }
 
     //杀死指定坐标的害虫
-    void KillBug(MyPoint _point) {
+    public void KillBug(MyPoint _point) {
         foreach (GameObject i in gameController.GetComponent<GameController>().plantList) {
             Plant p = i.GetComponent<Plant>();
             if (p.GetPoint().equal(_point)) {

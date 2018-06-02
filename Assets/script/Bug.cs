@@ -115,7 +115,7 @@ public class Bug {
 
     //判断给定棋盘坐标是否有植物活着
     bool plantAlive(int x, int y) {      
-        if (x >= skinMap.GetLength(0) || y >= skinMap.GetLength(1)) {
+        if (x >= skinMap.GetLength(0) || y >= skinMap.GetLength(1) || x < 0 || y < 0) {
             return false;
         }
         if (skinMap[x, y] == 1 && mapState[x, y] >= 7 && mapState[x, y] <= 11)
