@@ -14,15 +14,20 @@ public class GameController : MonoBehaviour
 
     private float O2CO2Rate;
 
-    private GameObject[] plantList;
+    public GameObject[] plantList;
 
 
     public GameObject targetMap;
+    public GameObject bugController;
     private GardenMap gardenMap; public GardenMap GetGardenMap() { return gardenMap; }
 
 
 
     public static int Move; //行动
+
+    void Awake() {
+        //bugController = GameObject.Find("BugController");
+    }
 
     // Use this for initialization
     void Start()
@@ -33,10 +38,10 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        /*if (Input.GetKeyDown(KeyCode.Space))
         {
             RoundConsume();
-        }
+        }*/
     }
 
     //回合结束时进行资源结算
@@ -54,6 +59,13 @@ public class GameController : MonoBehaviour
         foreach (GameObject i in plantList)
         {
             Plant p = i.GetComponent<Plant>();
+            if (p.infected)
+            {
+                if (p.HpDown())
+                {
+                    Destroy(i);
+                }
+            }
             if (p.live)
             {
                 totalO2Consume = totalO2Consume + p.O2Cost;
@@ -66,6 +78,8 @@ public class GameController : MonoBehaviour
                     totalMoonProduce = totalMoonProduce + p.GetMoonProduce(O2CO2Rate);
                 }
             }
+            //被感染的植物要减血, 减到0销毁植物
+
         }
         O2 = O2 - totalO2Consume + totalO2Produce;
         CO2 = CO2 - totalCO2Consume + totalCO2Produce;
@@ -80,10 +94,10 @@ public class GameController : MonoBehaviour
         GameObject.Find("Main Camera").GetComponent<UIControl>().ChangeSunMoon(sunPower, moonPower);
         GameObject.Find("Main Camera").GetComponent<UIControl>().ChangeAir(O2CO2TotalRate);
 
-        Debug.Log("O2:" + O2.ToString());
-        Debug.Log("CO2:" + CO2.ToString());
-        Debug.Log("SunPower:" + sunPower.ToString());
-        Debug.Log("MoonPower:" + moonPower.ToString());
+        //Debug.Log("O2:" + O2.ToString());
+        //Debug.Log("CO2:" + CO2.ToString());
+        //Debug.Log("SunPower:" + sunPower.ToString());
+        //Debug.Log("MoonPower:" + moonPower.ToString());
 
         round += 1;
         Move = 3;
@@ -91,22 +105,19 @@ public class GameController : MonoBehaviour
     }
 
     //建造植物时消耗太阳能量
-    void GrowConsumeSun(int delta)
-    {
+    void GrowConsumeSun(int delta){
         Debug.Log("sun:"+delta);
         sunPower = sunPower - delta;
     }
 
     //建造植物时消耗月亮能量
-    void GrowConsumeMoon(int delta)
-    {
+    void GrowConsumeMoon(int delta){
         moonPower = moonPower - delta;
     }
 
 
 
     public GameObject[] GetAllPlant() {
-
         return GameObject.FindGameObjectsWithTag("Plant");
     }
 
@@ -115,7 +126,6 @@ public class GameController : MonoBehaviour
     //获取当前地图上哪个坐标长着植物
     public List<MyPoint> FindPlant()
     {
-        
         int[,] skinMap = GardenMap.skinMap;
         int[,] mapState = GardenMap.mapstate;
         List<MyPoint> points = new List<MyPoint>();
@@ -131,5 +141,14 @@ public class GameController : MonoBehaviour
             }
         }
         return points;
+    }
+
+    public void StartInfect() {
+        if (round == 5)
+        {
+            bugController.GetComponent<BugController>().Infect();
+        }
+
+        bugController.GetComponent<BugController>().SpreadInfect();
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MyPoint : MonoBehaviour {
+public class MyPoint{
 
     public int x;
     public int y;
@@ -28,15 +28,17 @@ public class MyPoint : MonoBehaviour {
         this.y = _y;
     }
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public string ToString() {
+        return "(" + x.ToString() + "," + y.ToString() + ")";
+    }
 
+    public bool equal(MyPoint _point) {
+        if (this.x == _point.GetX() && this.y == _point.GetY()){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
     
 }
