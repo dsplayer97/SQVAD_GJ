@@ -48,6 +48,9 @@ public class GameController : MonoBehaviour
     //回合结束时进行资源结算
     public void RoundConsume()
     {
+        if (Lose()) {
+
+        }
         float totalO2Consume = 0;
         float totalCO2Consume = 0;
         float totalO2Produce = 0;
@@ -218,12 +221,24 @@ public class GameController : MonoBehaviour
         float O2CO2TotalRate = O2 / (O2 + CO2);
         GameObject.Find("Main Camera").GetComponent<UIControl>().ChangeSunMoon(sunPower, moonPower);
         GameObject.Find("Main Camera").GetComponent<UIControl>().ChangeAir(O2CO2TotalRate);
+        
     }
 
     public void MoonSword(MyPoint point) {
         moonPower = moonPower - 300;
         bugController.GetComponent<BugController>().KillBug(point);
-        Debug.Log("MoonSwordActive");
+        //Debug.Log("MoonSwordActive");
+    }
+
+    //如果第二回合之后场上没有植物了, 就失败了
+    public bool Lose() {
+        if (FindPlant().Count == 0 && round > 2)
+        {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
 }

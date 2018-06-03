@@ -79,7 +79,7 @@ public class Plant : MonoBehaviour
     public void Infect()
     {
         infected = true;
-        bugDebuffPersent = 0.5f;
+        bugDebuffPersent = 0.2f;
         Debug.Log("我被感染拉!" + this.point.ToString());
     }
 
@@ -159,10 +159,16 @@ public class Plant : MonoBehaviour
     public float GetSunProduce(float O2CO2Rate) {
         animator.SetBool("produce", true);
         animator.SetBool("produce", false);
+        if (O2CO2Rate < 0.1)
+        {
+            return sunProduce * bugDebuffPersent * 0.2f;
+        }
+
         if (O2CO2Rate < 0.3) {
 
             return sunProduce * bugDebuffPersent * 0.5f;
         }
+
 
         return sunProduce * bugDebuffPersent;
 
@@ -171,6 +177,11 @@ public class Plant : MonoBehaviour
 
 
     public float GetMoonProduce(float O2CO2Rate) {
+        if (O2CO2Rate > 0.9)
+        {
+            return moonProduce * bugDebuffPersent * 0.2f;
+        }
+
         if (O2CO2Rate > 0.7)
         {
             return moonProduce * bugDebuffPersent * 0.5f;
