@@ -43,7 +43,7 @@ public class BugController : MonoBehaviour {
     //感染植物
     public void Infect() {
         round = GetRound();
-        if (round >= 5) {
+        if (round >= 4) {
             List<MyPoint> points = FindPlant();
             int randomNum = Random.Range(0, points.Count);
             //Debug.Log(points.Count);

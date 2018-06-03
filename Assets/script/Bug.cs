@@ -84,47 +84,68 @@ public class Bug {
         mapState = GardenMap.mapstate;
 
         List<MyPoint> points = new List<MyPoint>();
-        MyPoint nextPoint = new MyPoint(-1, -1);
 
+        MyPoint nextPoint = new MyPoint(-1, -1);
         nextPoint.SetX(this.point.GetX() + 1);
         nextPoint.SetY(this.point.GetY());
-
         if (plantAlive(nextPoint.GetX(), nextPoint.GetY())) {
-
-            //points.Add(nextPoint);
             points.Insert(0, nextPoint);
-            //Debug.Log("加入:" + nextPoint.ToString());
         }
         
         nextPoint = new MyPoint(-1, -1);
         nextPoint.SetX(point.GetX() - 1);
         nextPoint.SetY(point.GetY());
-        if (plantAlive(nextPoint.GetX(), nextPoint.GetY()))
-        {
-            //points.Add(nextPoint);
+        if (plantAlive(nextPoint.GetX(), nextPoint.GetY())){
             points.Insert(0, nextPoint);
-            //Debug.Log("加入:" + nextPoint.ToString());
         }
 
         nextPoint = new MyPoint(-1, -1);
         nextPoint.SetX(point.GetX());
         nextPoint.SetY(point.GetY() - 1);
-        if (plantAlive(nextPoint.GetX(), nextPoint.GetY()))
-        {
-            //points.Add(nextPoint);
+        if (plantAlive(nextPoint.GetX(), nextPoint.GetY())){
             points.Insert(0, nextPoint);
-            //Debug.Log("加入:" + nextPoint.ToString());
         }
 
         nextPoint = new MyPoint(-1, -1);
         nextPoint.SetX(point.GetX());
         nextPoint.SetY(point.GetY() + 1);
+        if (plantAlive(nextPoint.GetX(), nextPoint.GetY())){
+            points.Insert(0, nextPoint);
+        }
+
+        /*
+        nextPoint = new MyPoint(-1, -1);
+        nextPoint.SetX(this.point.GetX() + 1);
+        nextPoint.SetY(this.point.GetY() + 1);
         if (plantAlive(nextPoint.GetX(), nextPoint.GetY()))
         {
-            //points.Add(nextPoint);
             points.Insert(0, nextPoint);
-            //Debug.Log("加入:" + nextPoint.ToString());
         }
+
+        nextPoint = new MyPoint(-1, -1);
+        nextPoint.SetX(point.GetX() - 1);
+        nextPoint.SetY(point.GetY() - 1);
+        if (plantAlive(nextPoint.GetX(), nextPoint.GetY()))
+        {
+            points.Insert(0, nextPoint);
+        }
+
+        nextPoint = new MyPoint(-1, -1);
+        nextPoint.SetX(point.GetX() + 1);
+        nextPoint.SetY(point.GetY() - 1);
+        if (plantAlive(nextPoint.GetX(), nextPoint.GetY()))
+        {
+            points.Insert(0, nextPoint);
+        }
+
+        nextPoint = new MyPoint(-1, -1);
+        nextPoint.SetX(point.GetX() - 1);
+        nextPoint.SetY(point.GetY() + 1);
+        if (plantAlive(nextPoint.GetX(), nextPoint.GetY()))
+        {
+            points.Insert(0, nextPoint);
+        }
+        */
 
         return points;
     }
